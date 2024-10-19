@@ -1,5 +1,5 @@
 import { type NextRequest } from "next/server";
-import getContactCallOptions from "../../(dbServerActions)/mongoActions";
+import { getContactCallOptions } from "../../(dbServerActions)/mongoActions";
 import { CallOptions, defaultOptions } from "../../vapiAgentUtils";
 import { mergeJSON } from "@/lib/utils";
 
