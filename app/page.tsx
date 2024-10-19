@@ -1,8 +1,9 @@
+import Contacts from "@/components/Contacts";
 import prisma from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs/server";
 
 export default async function Home() {
-  const user = (await currentUser());
+  const user = await currentUser();
 
   if (!user) {
     return null;
@@ -11,16 +12,26 @@ export default async function Home() {
   const phoneNumber = user.primaryPhoneNumber!.phoneNumber;
   let dbUser = await prisma.user.findUnique({
     where: {
-      phone_number: phoneNumber
-    }
+      phone_number: phoneNumber,
+    },
+    include: {
+      emergency_sending: true,
+    },
   });
   if (!dbUser) {
     dbUser = await prisma.user.create({
       data: {
-          phone_number: phoneNumber
-      }
+        phone_number: phoneNumber,
+      },
+      include: {
+        emergency_sending: true,
+      },
     });
   }
 
-  return <div className="">{/* Contacts Here */}</div>;
+  return (
+    <div>
+      <Contacts contacts={dbUser?.emergency_sending} />
+    </div>
+  );
 }
