@@ -10,6 +10,7 @@ import {
 } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { AddContactForm } from "./AddContactForm";
+import ContactsList from "./ContactsList";
 
 export type PartialEmergencyContact = {
   name: string;
@@ -30,20 +31,21 @@ export default function Contacts({
     setContacts([...contacts, contact]);
   }
 
+  function removeContact(contact: PartialEmergencyContact) {
+    setContacts(
+      contacts.filter(
+        (c) => contact.receiver_phone_number !== c.receiver_phone_number
+      )
+    );
+  }
+
   return (
-    <div>
-      {contacts.length > 0 ? (
-        contacts.map((contact, i) => {
-          return (
-            <p key={i}>
-              {contact.name} - {contact.receiver_phone_number}
-            </p>
-          );
-        })
-      ) : (
-        <p>You have no emergency contacts!</p>
-      )}
-      <AddContactButton addContact={addContact} />
+    <div className="mx-4 md:mx-32 space-y-4">
+      <div className="flex justify-between items-center">
+        <h1 className="font-bold text-xl md:text-2xl">Emergency Contacts</h1>
+        <AddContactButton addContact={addContact} />
+      </div>
+      <ContactsList contacts={contacts} removeContact={removeContact} />
     </div>
   );
 }
@@ -58,7 +60,7 @@ function AddContactButton({
   return (
     <Dialog open={addContactModalOpen} onOpenChange={setAddContactModalOpen}>
       <DialogTrigger asChild>
-        <Button>Add Emergency Contact</Button>
+        <Button>Add</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
