@@ -6,7 +6,13 @@ import { currentUser } from "@clerk/nextjs/server";
 export async function createEmergencyContact(
   name: string,
   receiverPhoneNumber: string
-): Promise<{ error: string } | { success: true }> {
+): Promise<
+  | {
+      error: string;
+      phone_number_error?: true;
+    }
+  | { success: true }
+> {
   try {
     const user = await currentUser();
     if (!user) {
@@ -14,7 +20,10 @@ export async function createEmergencyContact(
     }
 
     if (user.primaryPhoneNumber!.phoneNumber === receiverPhoneNumber) {
-      return { error: "Emergency contact can not be self" };
+      return {
+        error: "Emergency contact can not be self",
+        phone_number_error: true,
+      };
     }
 
     const receiver = await prisma.user.findUnique({
@@ -31,10 +40,16 @@ export async function createEmergencyContact(
     });
 
     if (!receiver) {
-      return { error: "Emergency contact requires an account" };
+      return {
+        error: "Emergency contact requires an account",
+        phone_number_error: true,
+      };
     }
     if (receiver.emergency_receiving.length > 0) {
-      return { error: "Emergency contact already exists" };
+      return {
+        error: "Emergency contact already exists",
+        phone_number_error: true,
+      };
     }
 
     await prisma.emergencyContact.create({
@@ -44,6 +59,29 @@ export async function createEmergencyContact(
         receiver_phone_number: receiverPhoneNumber,
       },
     });
+
+    return { success: true };
+  } catch (e) {
+    return { error: "Unknown error occured" };
+  }
+}
+
+export async function deleteEmergencyContact(receiverPhoneNumber: string) {
+  try {
+    const user = await currentUser();
+    if (!user) {
+      return { error: "Not logged in" };
+    }
+
+    const { count } = await prisma.emergencyContact.deleteMany({
+      where: {
+        sender_phone_number: user.primaryPhoneNumber!.phoneNumber,
+        receiver_phone_number: receiverPhoneNumber,
+      },
+    });
+    if (count === 0) {
+      return { error: "Emergency contact does not exist" };
+    }
 
     return { success: true };
   } catch (e) {

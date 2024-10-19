@@ -1,7 +1,14 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { ClerkProvider, RedirectToSignIn, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import {
+  ClerkProvider,
+  RedirectToSignIn,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
+import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,12 +38,16 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <SignedOut>
-            <RedirectToSignIn/>
+            <RedirectToSignIn />
           </SignedOut>
           <SignedIn>
-            <UserButton/>
+            <div className="flex justify-between items-center px-4 md:px-32 h-24 mb-8">
+              <h1 className="font-bold text-3xl">SafeTalk</h1>
+              <UserButton />
+            </div>
           </SignedIn>
           {children}
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>
