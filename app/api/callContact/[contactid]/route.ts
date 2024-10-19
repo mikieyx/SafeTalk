@@ -61,7 +61,7 @@ export async function POST() {
       phoneNumberId: String(process.env.VAPI_PHONE_NUMBER_ID),
       customer: {
         name: "test call",
-        number: "",
+        number: "format is ~12223334444",
       }
     }),
   };
