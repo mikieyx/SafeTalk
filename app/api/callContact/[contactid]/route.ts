@@ -3,7 +3,7 @@ export async function POST() {
   const options = {
     method: "POST",
     headers: {
-      Authorization: "c34ed43c-15a4-491f-af5d-1dfa2fd56b33",
+      Authorization: String(process.env.VAPI_PRIV),
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
@@ -189,7 +189,11 @@ export async function POST() {
         },
         credentialIds: ["<string>"],
       },
-      phoneNumberId: "",
+      phoneNumberId: "197714d5-1bc8-45cf-baab-25eceaca305d",
+      customer: {
+        name: "test call",
+        number: "",
+      }
     }),
   };
 
