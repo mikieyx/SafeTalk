@@ -1,6 +1,13 @@
-export async function POST() {
-  const userContactDefaultOptions = "";
-  const options = {
+import { Call } from "@prisma/client/runtime/library";
+import getContactCallOptions from "../../(dbServerActions)/mongoActions";
+
+export type CallOptions = { [key: string]: any };
+
+export async function POST({ params }: { params: { contactid: string } }) {
+  const userContactDefaultOptions: Partial<CallOptions> = getContactCallOptions(
+    params.contactid
+  );
+  const options: CallOptions = {
     method: "POST",
     headers: {
       Authorization: "c34ed43c-15a4-491f-af5d-1dfa2fd56b33",
@@ -192,6 +199,11 @@ export async function POST() {
       phoneNumberId: "",
     }),
   };
+
+  const callParams: CallOptions = Object.assign(
+    options,
+    userContactDefaultOptions
+  );
 
   const status = fetch("https://api.vapi.ai/call", options)
     .then((response) => response.json())
