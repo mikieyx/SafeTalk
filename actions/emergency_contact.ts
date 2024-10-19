@@ -6,7 +6,13 @@ import { currentUser } from "@clerk/nextjs/server";
 export async function createEmergencyContact(
   name: string,
   receiverPhoneNumber: string
-): Promise<{ error: string } | { success: true }> {
+): Promise<
+  | {
+      error: string;
+      phone_number_error?: true;
+    }
+  | { success: true }
+> {
   try {
     const user = await currentUser();
     if (!user) {
@@ -14,7 +20,10 @@ export async function createEmergencyContact(
     }
 
     if (user.primaryPhoneNumber!.phoneNumber === receiverPhoneNumber) {
-      return { error: "Emergency contact can not be self" };
+      return {
+        error: "Emergency contact can not be self",
+        phone_number_error: true,
+      };
     }
 
     const receiver = await prisma.user.findUnique({
@@ -31,10 +40,16 @@ export async function createEmergencyContact(
     });
 
     if (!receiver) {
-      return { error: "Emergency contact requires an account" };
+      return {
+        error: "Emergency contact requires an account",
+        phone_number_error: true,
+      };
     }
     if (receiver.emergency_receiving.length > 0) {
-      return { error: "Emergency contact already exists" };
+      return {
+        error: "Emergency contact already exists",
+        phone_number_error: true,
+      };
     }
 
     await prisma.emergencyContact.create({

@@ -19,10 +19,13 @@ import { PhoneInput } from "./ui/phone-input";
 import { Input } from "./ui/input";
 import { LucideLoader } from "lucide-react";
 import { Button } from "./ui/button";
+import { isValidPhoneNumber } from "react-phone-number-input";
 
 const contactSchema = z.object({
   name: z.string().min(1, "Name must contain at least 1 character"),
-  receiver_phone_number: z.string(), //TODO: Better validation of phone numbers
+  receiver_phone_number: z
+    .string()
+    .refine((val) => isValidPhoneNumber(val), "Valid phone number required"),
 });
 
 export function AddContactForm({
@@ -51,6 +54,10 @@ export function AddContactForm({
         description: result.error,
         variant: "destructive",
       });
+
+      if ("phone_number_error" in result) {
+        form.setError("receiver_phone_number", { message: result.error });
+      }
     } else {
       form.reset();
       addContact(values);
