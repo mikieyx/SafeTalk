@@ -1,5 +1,4 @@
 import { LucideTrash } from "lucide-react";
-import { PartialEmergencyContact } from "./Contacts";
 import {
   Table,
   TableBody,
@@ -8,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
-import { deleteEmergencyContact } from "@/actions/emergency_contact";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,31 +18,33 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
+import { PartialAssistant } from "./Assistants";
+import { deleteAssistant } from "@/actions/assistant";
 
-export default function ContactsList({
-  contacts,
-  removeContact,
+export default function AssistantsList({
+  assistants,
+  removeAssistant,
 }: {
-  contacts: PartialEmergencyContact[];
-  removeContact: (contact: PartialEmergencyContact) => void;
+  assistants: PartialAssistant[];
+  removeAssistant: (assistant: PartialAssistant) => void;
 }) {
-  return contacts.length > 0 ? (
+  return assistants.length > 0 ? (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Name</TableHead>
-          <TableHead>Phone Number</TableHead>
+          <TableHead>Description</TableHead>
+          <TableHead>Conversation Topic</TableHead>
           <TableHead></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {contacts.map((contact) => {
+        {assistants.map((assistant) => {
           return (
-            <ContactRow
-              key={contact.receiver_phone_number}
-              contact={contact}
+            <AssistantRow
+              key={assistant.id}
+              assistant={assistant}
               onDelete={() => {
-                removeContact(contact);
+                removeAssistant(assistant);
               }}
             />
           );
@@ -52,21 +52,21 @@ export default function ContactsList({
       </TableBody>
     </Table>
   ) : (
-    <p>You do not have any emergency contacts.</p>
+    <p>You do not have any assistants.</p>
   );
 }
 
-function ContactRow({
-  contact,
+function AssistantRow({
+  assistant,
   onDelete,
 }: {
-  contact: PartialEmergencyContact;
+  assistant: PartialAssistant;
   onDelete: () => void;
 }) {
   return (
     <TableRow>
-      <TableCell>{contact.name}</TableCell>
-      <TableCell>{contact.receiver_phone_number}</TableCell>
+      <TableCell>{assistant.description}</TableCell>
+      <TableCell>{assistant.conversation_topic}</TableCell>
       <TableCell className="flex justify-end">
         <AlertDialog>
           <AlertDialogTrigger asChild>
@@ -74,7 +74,7 @@ function ContactRow({
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Delete Contact?</AlertDialogTitle>
+              <AlertDialogTitle>Delete Assistant?</AlertDialogTitle>
               <AlertDialogDescription>
                 This action cannot be undone.
               </AlertDialogDescription>
@@ -84,7 +84,7 @@ function ContactRow({
               <AlertDialogAction
                 onClick={async () => {
                   onDelete();
-                  await deleteEmergencyContact(contact.receiver_phone_number);
+                  await deleteAssistant(assistant.id);
                 }}
               >
                 Delete

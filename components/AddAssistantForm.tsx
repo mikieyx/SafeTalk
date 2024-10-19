@@ -53,7 +53,7 @@ export function AddAssistantForm({
       });
     } else {
       form.reset();
-      addAssistant(values);
+      addAssistant({ ...values, id: result.id });
     }
   }
 
