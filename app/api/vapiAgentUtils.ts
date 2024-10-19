@@ -94,8 +94,8 @@ export const defaultOptions: CallOptions = {
       ],
       tools: [],
       toolIds: [],
-      provider: "groq",
-      model: "llama3-groq-8b-8192-tool-use-preview",
+      provider: "openai",
+      model: "gpt4o",
       temperature: 1,
       knowledgeBase: {
         provider: "canonical",
@@ -147,7 +147,8 @@ export const defaultOptions: CallOptions = {
   },
 };
 
-export const systemPrompt = (description: string, conversationTopic: string) => `$description $conversationTopic`;
+export const systemPrompt = (description: string, conversationTopic: string) =>
+  `$description $conversationTopic`;
 
 // export const systemPrompt = (
 //   description: string,
