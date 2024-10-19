@@ -7,8 +7,21 @@ export async function POST(
   request: NextRequest,
   { params }: { params: { contactid: string } }
 ) {
+  const {
+    callName,
+    messages,
+    assistantName,
+    additionalContext,
+    firstMessage,
+    endCallMessage,
+    phoneNumberId,
+    customerName,
+    customerNumber,
+  } = await request.json();
+
   const userContactDefaultOptions: Partial<CallOptions> =
     await getContactCallOptions(params.contactid);
+
   const options: CallOptions = {
     method: "POST",
     headers: {
@@ -16,11 +29,11 @@ export async function POST(
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      name: "test call",
+      name: callName || "New Call",
       assistant: {
         model: {
-          messages: [
-            { content: "Test test test you are a test.", role: "assistant" },
+          messages: messages || [
+            { content: "Test test test you are a test." + additionalContext, role: "system" },
           ],
           tools: [],
           toolIds: [],
@@ -48,14 +61,14 @@ export async function POST(
             recordingChannels: "mono",
           },
         ],
-        name: "test call",
-        firstMessage: "Hey! How was your day!",
-        endCallMessage: "Have a good day!",
-        endCallPhrases: ["Peace"],
+        name: assistantName || "test call",
+        firstMessage: firstMessage || "Hey! How was your day!",
+        endCallMessage: endCallMessage || "Well then, have a good rest of your day!",
+        endCallPhrases: ["Goodbye!", "Bye!", "See you later!"],
         serverUrl: "https://safe-talk-iota.vercel.app",
-        serverUrlSecret: "bruh",
+        serverUrlSecret: String(process.env.VAPI_SERVER_URL_SECRET),
         startSpeakingPlan: {
-          waitSeconds: 0.4,
+          waitSeconds: 0.7,
           smartEndpointingEnabled: false,
           transcriptionEndpointingPlan: {
             onPunctuationSeconds: 0.1,
@@ -69,18 +82,22 @@ export async function POST(
           backoffSeconds: 1,
         },
       },
-      phoneNumberId: String(process.env.VAPI_PHONE_NUMBER_ID),
+      phoneNumberId:
+        phoneNumberId || String(process.env.VAPI_PHONE_NUMBER_ID),
       customer: {
-        name: "test call",
-        number: String(process.env.VAPI_CALL_TARGET),
-      }
+        name:
+          customerName ||
+          String(process.env.VAPI_CALL_TARGET_NAME) ||
+          "test call",
+        number:
+          customerNumber ||
+          String(process.env.VAPI_CALL_TARGET) ||
+          "<default_number>",
+      },
     }),
   };
 
-  const callParams: CallOptions = Object.assign(
-    options,
-    userContactDefaultOptions
-  );
+  const callParams = Object.assign(options, userContactDefaultOptions);
 
   const status = fetch("https://api.vapi.ai/call", callParams)
     .then((response) => response.json())
@@ -91,12 +108,16 @@ export async function POST(
     .catch(() =>
       Response.json(
         {
-          error: "Call failed. If you're in an emergency please call 911",
+          error:
+            "Call failed. If you're in an emergency please call 911",
         },
         { status: 500 }
       )
     )
     .then(() =>
-      Response.json({ message: "Expect a call within the next 5 seconds" })
+      Response.json({
+        message:
+          "Expect a call within the next 5 seconds",
+      })
     );
 }
