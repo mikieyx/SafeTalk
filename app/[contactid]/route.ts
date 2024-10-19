@@ -12,7 +12,7 @@ export default function handler(
   const options = {
     method: "POST",
     headers: {
-      Authorization: "c34ed43c-15a4-491f-af5d-1dfa2fd56b33",
+      Authorization: String(process.env.VAPI_PRIV),
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
@@ -198,7 +198,7 @@ export default function handler(
         },
         credentialIds: ["<string>"],
       },
-      phoneNumberId: ''
+      phoneNumberId: '',
     }),
   };
 
