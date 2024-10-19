@@ -10,8 +10,10 @@ import {
 } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { AddAssistantForm } from "./AddAssistantForm";
+import AssistantsList from "./AssistantsList";
 
 export type PartialAssistant = {
+  id: string;
   description: string;
   conversation_topic: string;
 };
@@ -30,9 +32,20 @@ export default function Assistants({
     setAssistants([...assistants, assistant]);
   }
 
+  function removeAssistant(assistant: PartialAssistant) {
+    setAssistants(assistants.filter((a) => assistant.id !== a.id));
+  }
+
   return (
-    <div>
-      <AddAssistantButton addAssistant={addAssistant} />
+    <div className="mx-4 md:mx-32 p-4 space-y-4 border rounded-md">
+      <div className="flex justify-between items-center">
+        <h1 className="font-bold text-lg md:text-2xl">Assistants</h1>
+        <AddAssistantButton addAssistant={addAssistant} />
+      </div>
+      <AssistantsList
+        assistants={assistants}
+        removeAssistant={removeAssistant}
+      />
     </div>
   );
 }
@@ -50,7 +63,7 @@ function AddAssistantButton({
       onOpenChange={setAddAssistantModalOpen}
     >
       <DialogTrigger asChild>
-        <Button>Add Assistant</Button>
+        <Button>Add</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
