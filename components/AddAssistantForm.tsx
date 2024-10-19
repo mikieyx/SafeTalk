@@ -1,11 +1,9 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { PartialEmergencyContact } from "./Contacts";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
-import { createEmergencyContact } from "@/actions/emergency_contact";
 import {
   Form,
   FormControl,
@@ -19,56 +17,55 @@ import { PhoneInput } from "./ui/phone-input";
 import { Input } from "./ui/input";
 import { LucideLoader } from "lucide-react";
 import { Button } from "./ui/button";
+import { PartialAssistant } from "./Assistants";
+import { createAssistant } from "@/actions/assistant";
 
-const contactSchema = z.object({
-  name: z.string().min(1, "Name must contain at least 1 character"),
-  receiver_phone_number: z.string(), //TODO: Better validation of phone numbers
+const assistantSchema = z.object({
+  description: z.string(),
+  conversation_topic: z.string(),
 });
 
-export function AddContactForm({
-  addContact,
+export function AddAssistantForm({
+  addAssistant,
 }: {
-  addContact: (contact: PartialEmergencyContact) => void;
+  addAssistant: (assistant: PartialAssistant) => void;
 }) {
-  const form = useForm<z.infer<typeof contactSchema>>({
-    resolver: zodResolver(contactSchema),
+  const form = useForm<z.infer<typeof assistantSchema>>({
+    resolver: zodResolver(assistantSchema),
     defaultValues: {
-      name: "",
-      receiver_phone_number: "",
+      description: "",
+      conversation_topic: "",
     },
   });
 
   const { toast } = useToast();
 
-  async function onSubmit(values: z.infer<typeof contactSchema>) {
-    const result = await createEmergencyContact(
-      values.name,
-      values.receiver_phone_number
+  async function onSubmit(values: z.infer<typeof assistantSchema>) {
+    const result = await createAssistant(
+      values.description,
+      values.conversation_topic
     );
     if ("error" in result) {
       toast({
-        title: "Could not add emergency contact",
+        title: "Could not create assistant",
         description: result.error,
         variant: "destructive",
       });
     } else {
       form.reset();
-      addContact(values);
+      addAssistant(values);
     }
   }
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="max-w-lg space-y-8"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="name"
+          name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Description</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -78,12 +75,12 @@ export function AddContactForm({
         />
         <FormField
           control={form.control}
-          name="receiver_phone_number"
+          name="conversation_topic"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Phone Number</FormLabel>
+              <FormLabel>Conversation Topic</FormLabel>
               <FormControl>
-                <PhoneInput {...field} />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

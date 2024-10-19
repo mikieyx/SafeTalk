@@ -1,3 +1,4 @@
+import Assistants from "@/components/Assistants";
 import Contacts from "@/components/Contacts";
 import prisma from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs/server";
@@ -16,6 +17,7 @@ export default async function Home() {
     },
     include: {
       emergency_sending: true,
+      assistants: true,
     },
   });
   if (!dbUser) {
@@ -25,13 +27,15 @@ export default async function Home() {
       },
       include: {
         emergency_sending: true,
+        assistants: true,
       },
     });
   }
 
   return (
     <div>
-      <Contacts contacts={dbUser?.emergency_sending} />
+      <Contacts contacts={dbUser.emergency_sending} />
+      <Assistants assistants={dbUser.assistants} />
     </div>
   );
 }
