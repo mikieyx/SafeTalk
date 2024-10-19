@@ -97,8 +97,8 @@ export async function POST(
           ],
           tools: [],
           toolIds: [],
-          provider: "groq",
-          model: "llama3-groq-8b-8192-tool-use-preview",
+          provider: "openai",
+          model: "gpt-4o",
           temperature: 1,
           knowledgeBase: {
             provider: "canonical",
