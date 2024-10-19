@@ -41,7 +41,10 @@ export default function RootLayout({
             <RedirectToSignIn />
           </SignedOut>
           <SignedIn>
-            <UserButton />
+            <div className="flex justify-between items-center px-4 md:px-32 h-24 mb-8">
+              <h1 className="font-bold text-3xl">SafeTalk</h1>
+              <UserButton />
+            </div>
           </SignedIn>
           {children}
           <Toaster />
