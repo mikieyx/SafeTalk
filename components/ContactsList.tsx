@@ -20,6 +20,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
+import { formatPhoneNumberIntl } from "react-phone-number-input";
 
 export default function ContactsList({
   contacts,
@@ -66,7 +67,9 @@ function ContactRow({
   return (
     <TableRow>
       <TableCell>{contact.name}</TableCell>
-      <TableCell>{contact.receiver_phone_number}</TableCell>
+      <TableCell>
+        {formatPhoneNumberIntl(contact.receiver_phone_number)}
+      </TableCell>
       <TableCell className="flex justify-end">
         <AlertDialog>
           <AlertDialogTrigger asChild>
