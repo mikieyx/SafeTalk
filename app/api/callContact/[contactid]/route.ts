@@ -7,17 +7,6 @@ export async function POST(
   request: NextRequest,
   { params }: { params: { contactid: string } }
 ) {
-  let requestBody = {};
-
-  try {
-    requestBody = await request.json();
-  } catch (error) {
-    console.warn(
-      "Request body is not available or not in JSON format. Using default options."
-    );
-    console.error(error);
-  }
-
   const userContactDefaultOptions = await getContactCallOptions(
     params.contactid
   );

@@ -1,6 +1,5 @@
 import prisma from "@/lib/prisma";
 import { CallOptions, systemPrompt } from "../vapiAgentUtils";
-import { describe } from "node:test";
 
 export default async function getContactCallOptions(
   contactId: string
@@ -17,9 +16,7 @@ export default async function getContactCallOptions(
     return null;
   }
 
-  let retrivedOptions: Partial<CallOptions> = {};
-  retrivedOptions.name = contactId;
-
+  // TODO: customerName = String(process.env.VAPI_CALL_TARGET_NAME),
   return {
     name: contactId,
     customer: { number: assistant.user_phone_number },
