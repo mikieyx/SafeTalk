@@ -15,7 +15,27 @@ export async function POST(
   request: NextRequest,
   { params }: { params: { contactid: string } }
 ) {
-  const defaultOptions: CallOptions = {
+    let requestBody: RequestBody = {};
+
+  try {
+    requestBody = await request.json();
+  } catch (error) {
+    console.warn("Request body is not available or not in JSON format. Using default options.");
+    console.error(error);
+  }
+
+  const {
+    callName = "New Call",
+    assistantName = "test call",
+    additionalContext = "You are my best friend from childhood and you're calling to catch up.",
+    firstMessage = "Hello, I'm an emergency assistant for SafeTalk. How can I help you today?",
+    endCallMessage = "Well then, have a good rest of your day!",
+    phoneNumberId = String(process.env.VAPI_PHONE_NUMBER_ID),
+    customerName = String(process.env.VAPI_CALL_TARGET_NAME),
+    customerNumber = String(process.env.VAPI_CALL_TARGET),
+  } = requestBody;
+  
+    const defaultOptions: CallOptions = {
     name: "test call",
     assistant: {
       model: {
@@ -76,23 +96,13 @@ export async function POST(
       number: String(process.env.VAPI_CALL_TARGET),
     },
   };
-  const userContactDefaultOptions: Partial<CallOptions> =
-    await getContactCallOptions(params.contactid);
 
-  const callOptions: CallOptions = Object.assign(
-    defaultOptions,
+  const callParams: CallOptions = Object.assign(
+    options,
     userContactDefaultOptions
   );
 
-  const callParams: CallParams = {
-    method: "POST",
-    headers: {
-      Authorization: String(process.env.VAPI_API_KEY),
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(callOptions),
-  };
-
+>>>>>>> 72b4909114f1ebac9b901d265fa4e4b57d8916bd
   const status = fetch("https://api.vapi.ai/call", callParams)
     .then((response) => response.json())
     .then((response) => console.log(response))
@@ -102,12 +112,16 @@ export async function POST(
     .catch(() =>
       Response.json(
         {
-          error: "Call failed. If you're in an emergency please call 911",
+          error:
+            "Call failed. If you're in an emergency please call 911",
         },
         { status: 500 }
       )
     )
     .then(() =>
-      Response.json({ message: "Expect a call within the next 5 seconds" })
+      Response.json({
+        message:
+          "Expect a call within the next 5 seconds",
+      })
     );
 }
