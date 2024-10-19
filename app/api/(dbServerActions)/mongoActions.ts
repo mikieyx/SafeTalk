@@ -69,3 +69,14 @@ export async function getContactCallOptions(
     },
   };
 }
+
+export async function getEmergencyContacts(userPhoneNumber: string) {
+  "use server";
+  const contacts = await prisma.emergencyContact.aggregate({
+    where: {
+      sender_phone_number: userPhoneNumber,
+    },
+  });
+
+  return contacts;
+}

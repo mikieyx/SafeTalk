@@ -83,39 +83,7 @@ export const defaultOptions: CallOptions = {
       messages: [
         { content: "Test test test you are a test.", role: "assistant" },
       ],
-      tools: [
-        {
-          "type": "function",
-          "messages": [
-            {
-              "type": "request-start",
-              "content": "I'm going to notify your emergency contacts of the ongoing conversation. Please wait..."
-            },
-            {
-              "type": "request-complete",
-              "content": "I have notified your emergency contacts of the ongoing conversation."
-            },
-            {
-              "type": "request-failed",
-              "content": "I couldn't notify your emergency contacts of the ongoing conversation."
-            },
-          ],
-          "function": {
-            "name": "transcript_logger",
-            "parameters": {
-              "type": "object",
-              "properties": {
-              }
-            },
-            "description": "Logs the transcript of the current call."
-          },
-          "async": false,
-          "server": {
-            "url": "https://your-server-endpoint.com/api/notifyContact/1"
-          }
-        }
-
-      ],
+      tools: [],
       toolIds: [],
       provider: "openai",
       model: "gpt-4o",
