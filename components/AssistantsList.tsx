@@ -21,6 +21,7 @@ import {
 import { PartialAssistant } from "./Assistants";
 import { deleteAssistant } from "@/actions/assistant";
 import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
 
 export default function AssistantsList({
   assistants,
@@ -65,6 +66,7 @@ function AssistantRow({
   onDelete: () => void;
 }) {
   const { toast } = useToast();
+  const [callAttemptPending, setCallAttemptPending] = useState(false);
 
   return (
     <TableRow>
@@ -74,9 +76,13 @@ function AssistantRow({
         <LucidePhoneCall
           className="cursor-pointer"
           onClick={async () => {
+            if (callAttemptPending) return;
+
+            setCallAttemptPending(true);
             const response = await fetch(`api/callContact/${assistant.id}`, {
               method: "POST",
             });
+            setCallAttemptPending(false);
 
             if (response.status === 200) {
               toast({
