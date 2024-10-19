@@ -76,6 +76,51 @@ export type CallOptions = {
   customer?: Customer;
 };
 
+const fake911 = 
+      {
+        "type": "transferCall",
+        "destinations": [
+          {
+            "type": "number",
+            "number": "+17313419366",
+            "message": "I am forwarding your call to Fake 911. Please stay on the line."
+          }
+        ],
+        "function": {
+          "name": "transferCall",
+          "description": "Use this function to transfer the call. Only use it when following instructions that explicitly ask you to use the transferCall function. DO NOT call this function unless you are instructed to do so.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "destination": {
+                "type": "string",
+                "enum": [
+                  "+17313419366"
+                ],
+                "description": "The destination to transfer the call to."
+              }
+            },
+            "required": [
+              "destination"
+            ]
+          }
+        },
+        "messages": [
+          {
+            "type": "request-start",
+            "content": "I am forwarding your call to fake 911. Please stay on the line.",
+            "conditions": [
+              {
+                "param": "destination",
+                "operator": "eq",
+                "value": "+17313419366"
+              }
+            ]
+          }
+        ]
+      }
+
+
 export const defaultOptions: CallOptions = {
   name: "test call",
   assistant: {
@@ -83,7 +128,7 @@ export const defaultOptions: CallOptions = {
       messages: [
         { content: "Test test test you are a test.", role: "assistant" },
       ],
-      tools: [
+      tools: [fake911
         {
           "type": "function",
           "messages": [
@@ -119,11 +164,7 @@ export const defaultOptions: CallOptions = {
       toolIds: [],
       provider: "openai",
       model: "gpt-4o",
-      temperature: 1,
-      knowledgeBase: {
-        provider: "canonical",
-        topK: 5.5,
-      },
+      temperature: 0.5,
       maxTokens: 525,
       emotionRecognitionEnabled: true,
       numFastTurns: 1,
@@ -171,4 +212,36 @@ export const defaultOptions: CallOptions = {
 };
 
 export const systemPrompt = (description: string, conversationTopic: string) =>
-  `$You are playing the role of a person described as:\n${description}\nTalk about the following conversation starter:\n${conversationTopic}`;
+  // `$You are playing the role of a person described as:\n${description}\nTalk about the following conversation starter:\n${conversationTopic}`;
+`You are a voice assistant functioning as an emergency responder for a safety application called "SafeTalk", where customers are calling in to discreetly get themselves out of an unsafe situation through a phone call. Thus, you will NOT be the first person to talk in this converation. Let the customer start the conversation and pick the conversation topic.
+
+  Your job is to have a conversation with customers calling in to inconspicuously help them through their uncomfortable situation without letting anyone around them know. However, you have another IMPORTANT JOB which is to provide three keywords to users at the end of EVERY response you provide. Keywords have 3 levels of urgency:
+
+  1. No contacts are needed yet - if this keyword is used, continue the conversation and continue providing keywords. The user is saying there is no imminent danger, so there isn't a need to contact anyone yet.
+  2. Contact emergency contacts - if this keyword is used, the call will notify the customer's emergency contacts listed in our application.
+  3. Contact emergency officials - if this keyword is used, use the transferCall function
+
+  You MUST GENERATE these keywords based on the conversation at hand, and the three keywords must change every time you respond. Remeber; after each response, you MUST provide these three keywords. If you don't provide these keywords, the customer will not know what to do in their situation, and your call will not be able to help them.
+
+  For example, you might be having a conversation about sports. In ALL of your responses, you must generate 3 keywords related to the conversation. Here's an example conversation:
+
+  Customer: "Hey! Did you see that game last night?"
+  Assistant: "Yeah, I really enjoyed that player's tackle earlier. tackle, goal, touchdown"
+  Customer: "Yeah, that was a great game. There was an amazing touchdown"
+
+  Since the user's response included the keyword "touchdown", you will treat it as level 3 and use the transferCall function.
+
+  Assistant: "Nice! Did you get some good food at the game? helmet, uniform, whistle"
+  Customer: "Yeah, I got some hotdogs and popcorn, but they spilled on my uniform. It was great!"
+
+  Since the user's response DID INCLUDE the keyword "uniform", you will treat it as level 2. For now, just say the phrase "emergency contacts" and continue the conversation as normal.
+
+  Customers might not provide any of the keywords in their response. In that case, treat it as level 1, where no contacts need to be contacted. Proceed with the conversation as normal.
+
+  Be sure to introduce yourself as an emergency assistant for Safetalk, don't assume that the caller knows who you are (most appropriate at the start of the conversation).
+
+  If the customer goes off-topic or off-track and talks about something different from the previous topics, continue the conversation naturally with them. The customer is supposed to steer the conversation to help THEIR situation, not you.
+
+  Again, it is important that you ALWAYS provide three keywords at the end of every message, in the format described above. This task is extremely important to help customers navigate their unsafe situation with your help.
+
+  To assist with the immersion of being a regular contact of the customer, the customer has provided some instructions for what you should act and sound like: `
