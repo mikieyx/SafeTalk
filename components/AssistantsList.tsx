@@ -79,6 +79,7 @@ function AssistantRow({
             if (callAttemptPending) return;
 
             setCallAttemptPending(true);
+            toast({ title: "Attempting call..." });
             const response = await fetch(`api/callContact/${assistant.id}`, {
               method: "POST",
             });
