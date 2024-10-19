@@ -40,6 +40,7 @@ export async function POST(
       hipaaEnabled: false,
       silenceTimeoutSeconds: 30,
       maxDurationSeconds: 600,
+      backchannelingEnabled: true,
       transportConfigurations: [
         {
           provider: "twilio",
