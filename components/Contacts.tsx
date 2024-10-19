@@ -1,34 +1,39 @@
 "use client";
 
-import { EmergencyContact } from "@prisma/client";
-import { useOptimistic, useState } from "react";
-import "react-phone-number-input/style.css";
-import PhoneInput, { Value } from "react-phone-number-input";
-import { useFormStatus } from "react-dom";
-import { createEmergencyContact } from "@/actions/emergency_contact";
+import { useEffect, useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
+import { Button } from "./ui/button";
+import { AddContactForm } from "./AddContactForm";
 
-type PartialEmergencyContact = {
+export type PartialEmergencyContact = {
   name: string;
   receiver_phone_number: string;
 };
 
 export default function Contacts({
-  contacts,
+  contacts: _contacts,
 }: {
   contacts: PartialEmergencyContact[];
 }) {
-  const [optimisticContacts, addOptimisticContact] = useOptimistic<
-    PartialEmergencyContact[],
-    PartialEmergencyContact
-  >(contacts, (state, newContact) => [...state, newContact]);
+  const [contacts, setContacts] = useState(_contacts);
+  useEffect(() => {
+    setContacts(_contacts);
+  }, [_contacts]);
 
-  // TODO: react-hook-form/shadcn
-  const [phoneNumber, setPhoneNumber] = useState<Value>();
+  function addContact(contact: PartialEmergencyContact) {
+    setContacts([...contacts, contact]);
+  }
 
   return (
     <div>
-      {optimisticContacts.length > 0 ? (
-        optimisticContacts.map((contact, i) => {
+      {contacts.length > 0 ? (
+        contacts.map((contact, i) => {
           return (
             <p key={i}>
               {contact.name} - {contact.receiver_phone_number}
@@ -38,21 +43,34 @@ export default function Contacts({
       ) : (
         <p>You have no emergency contacts!</p>
       )}
-      <form
-        action={async (formData: FormData) => {
-          // TODO: react-hook-form/shadcn/error handling in UI/form state in UI
-          const name = formData.get("name") as string;
-          addOptimisticContact({
-            name,
-            receiver_phone_number: phoneNumber as string,
-          });
-          await createEmergencyContact(name, phoneNumber as string);
-        }}
-      >
-        <input type="text" name="name" />
-        <PhoneInput value={phoneNumber} onChange={setPhoneNumber} />
-        <button type="submit">Add</button>
-      </form>
+      <AddContactButton addContact={addContact} />
     </div>
+  );
+}
+
+function AddContactButton({
+  addContact,
+}: {
+  addContact: (contact: PartialEmergencyContact) => void;
+}) {
+  const [addContactModalOpen, setAddContactModalOpen] = useState(false);
+
+  return (
+    <Dialog open={addContactModalOpen} onOpenChange={setAddContactModalOpen}>
+      <DialogTrigger asChild>
+        <Button>Add Emergency Contact</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Add Emergency Contact</DialogTitle>
+        </DialogHeader>
+        <AddContactForm
+          addContact={(contact) => {
+            addContact(contact);
+            setAddContactModalOpen(false);
+          }}
+        />
+      </DialogContent>
+    </Dialog>
   );
 }
