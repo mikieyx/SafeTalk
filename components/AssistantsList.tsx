@@ -1,4 +1,4 @@
-import { LucideTrash } from "lucide-react";
+import { LucidePhoneCall, LucideTrash } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -20,6 +20,7 @@ import {
 } from "./ui/alert-dialog";
 import { PartialAssistant } from "./Assistants";
 import { deleteAssistant } from "@/actions/assistant";
+import { useToast } from "@/hooks/use-toast";
 
 export default function AssistantsList({
   assistants,
@@ -63,11 +64,34 @@ function AssistantRow({
   assistant: PartialAssistant;
   onDelete: () => void;
 }) {
+  const { toast } = useToast();
+
   return (
     <TableRow>
       <TableCell>{assistant.description}</TableCell>
       <TableCell>{assistant.conversation_topic}</TableCell>
-      <TableCell className="flex justify-end">
+      <TableCell className="flex justify-end gap-2">
+        <LucidePhoneCall
+          className="cursor-pointer"
+          onClick={async () => {
+            const response = await fetch(`api/callContact/${assistant.id}`, {
+              method: "POST",
+            });
+
+            if (response.status === 200) {
+              toast({
+                title: "Calling...",
+                description: "Expect a call within the next 5 seconds",
+              });
+            } else {
+              toast({
+                title: "Call Failed",
+                description: "If you are in an emergency, call 911",
+                variant: "destructive",
+              });
+            }
+          }}
+        />
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <LucideTrash className="cursor-pointer" />

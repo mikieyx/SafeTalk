@@ -42,7 +42,7 @@ export default function RootLayout({
           </SignedOut>
           <SignedIn>
             <div className="flex justify-between items-center px-4 md:px-32 h-24 mb-8">
-              <h1 className="font-bold text-3xl">SafeTalk</h1>
+              <h1 className="font-bold text-3xl">SafeWords</h1>
               <UserButton />
             </div>
           </SignedIn>
