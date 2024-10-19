@@ -3,7 +3,7 @@ export async function POST() {
   const options = {
     method: "POST",
     headers: {
-      Authorization: String(process.env.VAPI_PRIV),
+      Authorization: "c34ed43c-15a4-491f-af5d-1dfa2fd56b33",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
@@ -189,15 +189,9 @@ export async function POST() {
         },
         credentialIds: ["<string>"],
       },
-<<<<<<< HEAD:app/api/callContact/[contactid]/route.ts
       phoneNumberId: "",
-=======
-      phoneNumberId: '',
->>>>>>> 107da53b16a9e57202e12e7afd85ed8be98977bb:app/[contactid]/route.ts
     }),
   };
-
-  
 
   const status = fetch("https://api.vapi.ai/call", options)
     .then((response) => response.json())
