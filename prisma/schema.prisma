@@ -37,6 +37,6 @@ model Assistant {
   description        String
   conversation_topic String
 
-  user              User?   @relation(fields: [user_phone_number], references: [phone_number])
-  user_phone_number String?
+  user              User   @relation(fields: [user_phone_number], references: [phone_number])
+  user_phone_number String
 }
