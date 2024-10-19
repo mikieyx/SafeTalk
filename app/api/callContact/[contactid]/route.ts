@@ -1,12 +1,14 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
- 
-type ResponseData = {
-  message: string
-}
- 
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<ResponseData>
-) {
-  res.status(200).json({ message: 'Hello from Next.js!' })
+export async function POST() {
+  //   const res = await fetch("https://data.mongodb-api.com/...", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "API-Key": process.env.DATA_API_KEY!,
+  //     },
+  //     body: JSON.stringify({ time: new Date().toISOString() }),
+  //   });
+
+  //   const data = await res.json();
+
+  return Response.json("Hello World");
 }
