@@ -3,7 +3,7 @@ export async function POST() {
   const options = {
     method: "POST",
     headers: {
-      Authorization: String(process.env.VAPI_PRIV),
+      Authorization: String(process.env.VAPI_API_KEY),
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
@@ -14,41 +14,13 @@ export async function POST() {
           model: "nova-2",
           language: "bg",
           smartFormat: false,
-          keywords: ["<string>"],
+          keywords: [],
           endpointing: 255,
         },
         model: {
           messages: [{ content: "<string>", role: "assistant" }],
-          tools: [
-            {
-              async: false,
-              messages: [
-                {
-                  type: "request-start",
-                  content: "<string>",
-                  conditions: [
-                    { value: "<string>", operator: "eq", param: "<string>" },
-                  ],
-                },
-              ],
-              type: "dtmf",
-              function: {
-                name: "<string>",
-                description: "<string>",
-                parameters: {
-                  type: "object",
-                  properties: {},
-                  required: ["<string>"],
-                },
-              },
-              server: {
-                timeoutSeconds: 20,
-                url: "<string>",
-                secret: "<string>",
-              },
-            },
-          ],
-          toolIds: ["<string>"],
+          tools: [],
+          toolIds: [],
           provider: "groq",
           model: "llama3-groq-8b-8192-tool-use-preview",
           temperature: 1,
@@ -65,7 +37,6 @@ export async function POST() {
           fillerInjectionEnabled: false,
           provider: "cartesia",
           voiceId: "andrew",
-          speed: 1.25,
           chunkPlan: {
             enabled: true,
             minCharacters: 30,
@@ -131,7 +102,7 @@ export async function POST() {
             recordingChannels: "mono",
           },
         ],
-        name: "<string>",
+        name: "test call",
         firstMessage: "Hey! How was your day!",
         voicemailDetection: {
           provider: "twilio",
@@ -142,37 +113,11 @@ export async function POST() {
           machineDetectionSpeechEndThreshold: 2750,
           machineDetectionSilenceTimeout: 6000,
         },
-        voicemailMessage: "<string>",
         endCallMessage: "Have a good day!",
-        endCallPhrases: ["<string>"],
+        endCallPhrases: ["Peace"],
         metadata: {},
-        serverUrl: "<string>",
-        serverUrlSecret: "<string>",
-        analysisPlan: {
-          summaryPrompt: "<string>",
-          summaryRequestTimeoutSeconds: 10.5,
-          structuredDataRequestTimeoutSeconds: 10.5,
-          successEvaluationPrompt: "<string>",
-          successEvaluationRubric: "NumericScale",
-          successEvaluationRequestTimeoutSeconds: 10.5,
-          structuredDataPrompt: "<string>",
-          structuredDataSchema: {
-            type: "string",
-            items: {},
-            properties: {},
-            description: "<string>",
-            required: ["<string>"],
-          },
-        },
-        artifactPlan: {
-          videoRecordingEnabled: true,
-          recordingS3PathPrefix: "<string>",
-        },
-        messagePlan: {
-          idleMessages: ["<string>"],
-          idleMessageMaxSpokenCount: 5.5,
-          idleTimeoutSeconds: 17.5,
-        },
+        serverUrl: "https://safe-talk-iota.vercel.app",
+        serverUrlSecret: "bruh",
         startSpeakingPlan: {
           waitSeconds: 0.4,
           smartEndpointingEnabled: false,
@@ -187,12 +132,12 @@ export async function POST() {
           voiceSeconds: 0.2,
           backoffSeconds: 1,
         },
-        credentialIds: ["<string>"],
+        credentialIds: [],
       },
-      phoneNumberId: "197714d5-1bc8-45cf-baab-25eceaca305d",
+      phoneNumberId: String(process.env.VAPI_PHONE_NUMBER_ID),
       customer: {
         name: "test call",
-        number: "",
+        number: "format is +11111111",
       }
     }),
   };
