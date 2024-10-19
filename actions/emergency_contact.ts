@@ -65,3 +65,26 @@ export async function createEmergencyContact(
     return { error: "Unknown error occured" };
   }
 }
+
+export async function deleteEmergencyContact(receiverPhoneNumber: string) {
+  try {
+    const user = await currentUser();
+    if (!user) {
+      return { error: "Not logged in" };
+    }
+
+    const { count } = await prisma.emergencyContact.deleteMany({
+      where: {
+        sender_phone_number: user.primaryPhoneNumber!.phoneNumber,
+        receiver_phone_number: receiverPhoneNumber,
+      },
+    });
+    if (count === 0) {
+      return { error: "Emergency contact does not exist" };
+    }
+
+    return { success: true };
+  } catch (e) {
+    return { error: "Unknown error occured" };
+  }
+}
