@@ -15,18 +15,28 @@ datasource db {
 
 model User {
   phone_number String @id @map("_id")
-  
-  emergency_sending EmergencyContact[] @relation(name: "sending")
+
+  emergency_sending   EmergencyContact[] @relation(name: "sending")
   emergency_receiving EmergencyContact[] @relation(name: "receiving")
-  
+
+  assistants Assistant[]
 }
 
 model EmergencyContact {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
   name String
 
-  sender User @relation(name: "sending", fields: [sender_phone_number], references: [phone_number])
-  sender_phone_number String
-  receiver User @relation(name: "receiving", fields: [receiver_phone_number], references: [phone_number])
+  sender                User   @relation(name: "sending", fields: [sender_phone_number], references: [phone_number])
+  sender_phone_number   String
+  receiver              User   @relation(name: "receiving", fields: [receiver_phone_number], references: [phone_number])
   receiver_phone_number String
+}
+
+model Assistant {
+  id                 String @id @default(auto()) @map("_id") @db.ObjectId
+  description        String
+  conversation_topic String
+
+  user              User?   @relation(fields: [user_phone_number], references: [phone_number])
+  user_phone_number String?
 }
