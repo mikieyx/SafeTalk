@@ -2,9 +2,9 @@ import { CallOptions } from "../callContact/[contactid]/route";
 
 export default async function getContactCallOptions(
   contactId: string
-): Promise<CallOptions> {
+): Promise<Partial<CallOptions>> {
   "use server";
-  return new Promise((resolve, reject) => {
-    name: contactId;
+  return Promise.resolve({
+    name: contactId,
   });
 }

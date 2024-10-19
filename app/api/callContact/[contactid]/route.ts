@@ -1,12 +1,14 @@
-import { Call } from "@prisma/client/runtime/library";
+import { type NextRequest } from "next/server";
 import getContactCallOptions from "../../(dbServerActions)/mongoActions";
 
-export type CallOptions = { [key: string]: any };
+export type CallOptions = { [key: string]: string | number | object };
 
-export async function POST({ params }: { params: { contactid: string } }) {
-  const userContactDefaultOptions: Partial<CallOptions> = getContactCallOptions(
-    params.contactid
-  );
+export async function POST(
+  request: NextRequest,
+  { params }: { params: { contactid: string } }
+) {
+  const userContactDefaultOptions: Partial<CallOptions> =
+    await getContactCallOptions(params.contactid);
   const options: CallOptions = {
     method: "POST",
     headers: {
@@ -17,7 +19,9 @@ export async function POST({ params }: { params: { contactid: string } }) {
       name: "test call",
       assistant: {
         model: {
-          messages: [{ content: "Test test test you are a test.", role: "assistant" }],
+          messages: [
+            { content: "Test test test you are a test.", role: "assistant" },
+          ],
           tools: [],
           toolIds: [],
           provider: "groq",
@@ -69,7 +73,7 @@ export async function POST({ params }: { params: { contactid: string } }) {
       customer: {
         name: "test call",
         number: "format is ~12223334444",
-      }
+      },
     }),
   };
 
@@ -78,7 +82,7 @@ export async function POST({ params }: { params: { contactid: string } }) {
     userContactDefaultOptions
   );
 
-  const status = fetch("https://api.vapi.ai/call", options)
+  const status = fetch("https://api.vapi.ai/call", callParams)
     .then((response) => response.json())
     .then((response) => console.log(response))
     .catch((err) => console.error(err));
