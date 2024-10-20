@@ -9,7 +9,7 @@ type Assistant = {
   recordingEnabled?: boolean; // Should be true
   hipaaEnabled?: boolean; // Should be false
   clientMessage?: [];
-  serverMessage?: [];
+  serverMessage?: string[];
   silenceTimeoutSeconds?: number;
   maxDurationSeconds?: number; // Interesting
   backgroundSound?: "office" | "off"; // Interesting
@@ -139,6 +139,7 @@ export const emergencyContactOptions = (
 export const defaultOptions: CallOptions = {
   name: "test call",
   assistant: {
+    serverMessage: ["end-of-call-report", "transfer-destination-request"],
     model: {
       messages: [
         { content: "Test test test you are a test.", role: "assistant" },
@@ -170,8 +171,7 @@ export const defaultOptions: CallOptions = {
     firstMessage: "Hey! How was your day!",
     endCallMessage: "Have a good day!",
     endCallPhrases: ["Peace"],
-    serverUrl: "https://safe-talk-iota.vercel.app/",
-    serverUrlSecret: "bruh",
+    serverUrl: "https://angelshot.co/api/endCall",
     startSpeakingPlan: {
       waitSeconds: 0.4,
       smartEndpointingEnabled: false,
