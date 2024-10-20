@@ -40,7 +40,7 @@ export default function Contacts({
   }
 
   return (
-    <div className="mx-4 md:mx-32 p-4 space-y-4 border rounded-md">
+    <div className="mx-4 md:mx-32 p-4 space-y-4 border rounded-md bg-white">
       <div className="flex justify-between items-center">
         <h1 className="font-bold text-lg md:text-2xl">Emergency Contacts</h1>
         <AddContactButton addContact={addContact} />
