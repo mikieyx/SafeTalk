@@ -65,7 +65,6 @@ export async function POST(
     await prisma.call.updateMany({
       where : {
         user_phone_number: params.user_phone_number,
-        end_time: null
       },
       data: {
         contacts_notified: new Date()
