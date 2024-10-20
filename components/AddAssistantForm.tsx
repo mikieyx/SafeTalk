@@ -18,6 +18,13 @@ import { LucideLoader } from "lucide-react";
 import { Button } from "./ui/button";
 import { PartialAssistant } from "./Assistants";
 import { createAssistant } from "@/actions/assistant";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 const assistantSchema = z.object({
   description: z.string(),
@@ -96,14 +103,18 @@ export function AddAssistantForm({
             <FormItem>
               <FormLabel>Gender</FormLabel>
               <FormControl>
-                <select
-                  value={field.value}
-                  onChange={field.onChange}
-                  className="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
                 >
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Gender" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="male">Male</SelectItem>
+                    <SelectItem value="female">Female</SelectItem>
+                  </SelectContent>
+                </Select>
               </FormControl>
               <FormMessage />
             </FormItem>
