@@ -64,7 +64,7 @@ export async function getContactCallOptions(
             },
             async: false,
             server: {
-              url: `https://www.angelshot.co/api/notifyContact/${assistant.user_phone_number}`,
+              url: `https://900f-199-115-241-195.ngrok-free.app/api/notifyContact/${assistant.user_phone_number}`,
             },
           },
         ],
@@ -102,7 +102,7 @@ export async function getEmergencyContacts(userPhoneNumber: string) {
   return contacts;
 }
 
-export async function endCall(cid: string) {
+export async function endCall(cid: string, summary: string, transcript: string, recording_url: string) {
   await prisma.call.update({
     where: {
       id: cid,
@@ -110,6 +110,9 @@ export async function endCall(cid: string) {
     data: {
       ongoing: false,
       end_time: new Date(),
+      summary: summary,
+      transcript: transcript,
+      recording_url: recording_url
     },
   });
 }
