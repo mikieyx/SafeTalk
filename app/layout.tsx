@@ -43,7 +43,7 @@ export default function RootLayout({
             <RedirectToSignIn />
           </SignedOut>
           <SignedIn>
-            <div className="flex justify-between items-center px-4 md:px-32 h-24 border-b">
+            <div className="flex justify-between items-center px-4 md:px-32 h-20 shadow-md">
               <h1 className="font-bold text-3xl">AngelShot</h1>
               <UserButton />
             </div>
