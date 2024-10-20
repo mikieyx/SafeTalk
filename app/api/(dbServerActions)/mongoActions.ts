@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { CallOptions, systemPrompt } from "../vapiAgentUtils";
+import { EmergencyContact } from "@prisma/client";
 
 export async function getContactCallOptions(
   contactId: string
@@ -72,9 +73,12 @@ export async function getContactCallOptions(
 
 export async function getEmergencyContacts(userPhoneNumber: string) {
   "use server";
-  const contacts = await prisma.emergencyContact.aggregate({
+  const contacts = await prisma.emergencyContact.findMany({
     where: {
       sender_phone_number: userPhoneNumber,
+    },
+    include: {
+      sender: true,
     },
   });
 

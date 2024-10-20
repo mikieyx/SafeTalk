@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getEmergencyContacts } from "../../(dbServerActions)/mongoActions";
+import { emergencyContactOptions } from "../../vapiAgentUtils";
 
 export async function POST(
   request: NextRequest,
@@ -34,7 +35,11 @@ export async function POST(
     const emergencyContacts = await getEmergencyContacts(
       params.user_phone_number
     );
-    for (const emergencyContact in emergencyContacts) {
+    for (const emergencyContact of emergencyContacts) {
+      const callParams = emergencyContactOptions(
+        emergencyContact.sender.phone_number,
+        emergencyContact.receiver_phone_number
+      );
       // text notify emergencyContact
       const status = await fetch("https://api.vapi.ai/call", {
         method: "POST",
@@ -48,7 +53,10 @@ export async function POST(
         console.error("Failed to notify emergency contact:", emergencyContact);
         continue;
       }
-      console.log("Notifying emergency contact:", emergencyContact);
+      console.log(
+        "Notifying emergency contact:",
+        emergencyContact.receiver_phone_number
+      );
     }
 
     console.log("Response to be sent:", response);

@@ -76,62 +76,62 @@ export type CallOptions = {
   customer?: Customer;
 };
 
-const fake911 =
-      {
-        "type": "transferCall",
-        "destinations": [
-          {
-            "type": "number",
-            "number": "+17313419366",
-            "message": "I am forwarding your call to Fake 911. Please stay on the line."
-          }
-        ],
-        "function": {
-          "name": "transferCall",
-          "description": "Use this function to transfer the call. Only use it when following instructions that explicitly ask you to use the transferCall function. DO NOT call this function unless you are instructed to do so.",
-          "parameters": {
-            "type": "object",
-            "properties": {
-              "destination": {
-                "type": "string",
-                "enum": [
-                  "+17313419366"
-                ],
-                "description": "The destination to transfer the call to."
-              }
-            },
-            "required": [
-              "destination"
-            ]
-          }
+const fake911 = {
+  type: "transferCall",
+  destinations: [
+    {
+      type: "number",
+      number: "+17313419366",
+      message:
+        "I am forwarding your call to Fake 911. Please stay on the line.",
+    },
+  ],
+  function: {
+    name: "transferCall",
+    description:
+      "Use this function to transfer the call. Only use it when following instructions that explicitly ask you to use the transferCall function. DO NOT call this function unless you are instructed to do so.",
+    parameters: {
+      type: "object",
+      properties: {
+        destination: {
+          type: "string",
+          enum: ["+17313419366"],
+          description: "The destination to transfer the call to.",
         },
-        "messages": [
-          {
-            "type": "request-start",
-            "content": "I am forwarding your call to fake 911. Please stay on the line.",
-            "conditions": [
-              {
-                "param": "destination",
-                "operator": "eq",
-                "value": "+17313419366"
-              }
-            ]
-          }
-        ]
-      }
+      },
+      required: ["destination"],
+    },
+  },
+  messages: [
+    {
+      type: "request-start",
+      content:
+        "I am forwarding your call to fake 911. Please stay on the line.",
+      conditions: [
+        {
+          param: "destination",
+          operator: "eq",
+          value: "+17313419366",
+        },
+      ],
+    },
+  ],
+};
 
-
-export const emergencyContactOptions: CallOptions = (user) => {
+export const emergencyContactOptions = (
+  user: string,
+  target: string
+): CallOptions => {
   return {
     name: "notifyEmergencyContacts",
     customer: {
-      number: "+17076416129",
+      number: target,
     },
     assistant: {
       firstMessageMode: "assistant-speaks-first",
       recordingEnabled: false,
-      firstMessage:
-        "You are an emergency contact for user. They requested your attention. Please check safe words dot U S",
+      firstMessage: `You are an emergency contact for ${user}. They requested your attention. Please check angle shot dot co for more information or call ${user} directly.`,
+      maxDurationSeconds: 15,
     },
   };
 };
