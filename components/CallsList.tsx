@@ -62,7 +62,10 @@ function CallRow({ call, onDelete }: { call: Call; onDelete: () => void }) {
   return (
     <TableRow>
       <TableCell>
-        <Link href={"/call/" + call.id}>
+        <Link
+          className="hover:underline text-blue-500"
+          href={"/call/" + call.id}
+        >
           {call.start_time.toLocaleString()}
         </Link>
       </TableCell>
