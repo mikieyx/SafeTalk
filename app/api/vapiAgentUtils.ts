@@ -171,7 +171,6 @@ export const defaultOptions: CallOptions = {
       },
     ],
     name: "test call",
-    firstMessage: "Hey! How was your day!",
     endCallMessage: "Have a good day!",
     endCallPhrases: ["You're safe now.", "Goodbye!", "Have a good day!", "Bye!"],
     serverUrl: "https://angelshot.co/api/endCall",

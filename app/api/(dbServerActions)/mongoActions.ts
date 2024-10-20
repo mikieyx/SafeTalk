@@ -82,7 +82,7 @@ export async function getContactCallOptions(
         provider: "11labs",
         voiceId: assistant.gender === "male" ? "ryan" : "marissa"
       },
-      firstMessage: `Hey ${user?.firstName}! How was your day!`,
+      firstMessage: `Hey! How have you been ${user?.firstName}?`,
       endCallMessage: `Have a good day ${user?.firstName}!`,
     },
   };
