@@ -18,7 +18,7 @@ const GeneratePDF = ({ call }: { call: Call }) => {
     doc.setFontSize(12);
     doc.text("Date: " + new Date().toLocaleDateString(), 20, 30);
 
-    // User Information (from the call prop)
+    // User Information
     doc.setFontSize(14);
     doc.text("User Information:", 20, 50);
     doc.setFontSize(12);
@@ -39,40 +39,56 @@ const GeneratePDF = ({ call }: { call: Call }) => {
       20,
       100
     );
-    doc.text("Transcript: " + (call.transcript || "N/A"), 20, 110);
 
-    doc.text("Stress Level Over Time: ", 20, 130);
-    doc.text("[Stress Level Data Placeholder]", 20, 140);
+    // Transcript with text wrapping
+    const transcript = call.transcript || "N/A";
+    const transcriptLines = doc.splitTextToSize(transcript, 170); // Adjust width as needed
 
-    doc.text("Location Over Time: ", 20, 160);
-    doc.text("[Location Data Placeholder]", 20, 170);
+    doc.text("Transcript:", 20, 110);
+
+    let yOffset = 120;
+    transcriptLines.forEach((line : string) => {
+      doc.text(line, 20, yOffset);
+      yOffset += 10; // Adjust spacing as needed
+    });
+
+    // Stress Level and Location Data
+    doc.text("Stress Level Over Time:", 20, yOffset + 10);
+    doc.text("[Stress Level Data Placeholder]", 20, yOffset + 20);
+
+    doc.text("Location Over Time:", 20, yOffset + 40);
+    doc.text("[Location Data Placeholder]", 20, yOffset + 50);
 
     // Emergency Contacts
     doc.setFontSize(14);
-    doc.text("Emergency Contacts:", 20, 190);
+    doc.text("Emergency Contacts:", 20, yOffset + 70);
     doc.setFontSize(12);
-    doc.text("Contacted: " + (call.contacts_notified ? "Yes" : "No"), 20, 200);
-    doc.text("Contact Time: [Time Placeholder]", 20, 210); // Add actual contact time if available
+    doc.text("Contacted: " + (call.contacts_notified ? "Yes" : "No"), 20, yOffset + 80);
+    doc.text("Contact Time: [Time Placeholder]", 20, yOffset + 90);
 
     // Authorities
     doc.setFontSize(14);
-    doc.text("Authorities Contacted:", 20, 230);
+    doc.text("Authorities Contacted:", 20, yOffset + 110);
     doc.setFontSize(12);
     doc.text(
       "Contacted: " + (call.authorities_notified ? "Yes" : "No"),
       20,
-      240
+      yOffset + 120
     );
-    doc.text("Contact Time: [Time Placeholder]", 20, 250); // Add actual authority contact time if available
+    doc.text("Contact Time: [Time Placeholder]", 20, yOffset + 130);
 
     // Footer
     doc.setFontSize(10);
-    doc.text(
+
+    const footerText =
       "This document serves as an evidence report of the emergency call made on " +
-        new Date(call.start_time).toLocaleDateString(),
-      20,
-      270
-    );
+      new Date(call.start_time).toLocaleDateString();
+
+    const footerLines = doc.splitTextToSize(footerText, 170); // Adjust width as needed
+    footerLines.forEach((line : string) => {
+      yOffset += 10;
+      doc.text(line, 20, yOffset + 150);
+    });
 
     // Save the PDF
     doc.save("Emergency_Call_Evidence_Report.pdf");
