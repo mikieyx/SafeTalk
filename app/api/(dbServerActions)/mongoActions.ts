@@ -1,6 +1,5 @@
 import prisma from "@/lib/prisma";
 import { CallOptions, systemPrompt } from "../vapiAgentUtils";
-import { EmergencyContact } from "@prisma/client";
 
 export async function getContactCallOptions(
   contactId: string
