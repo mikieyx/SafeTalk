@@ -144,7 +144,7 @@ export const defaultOptions: CallOptions = {
     serverMessages: ["end-of-call-report", "transfer-destination-request"],
     model: {
       messages: [
-        { content: "Test test test you are a test.", role: "assistant" },
+        { content: "", role: "system" },
       ],
       tools: [fake911],
       toolIds: [],
