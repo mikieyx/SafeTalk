@@ -38,7 +38,7 @@ export default async function CallPage({
 
   // Reformatting the transcript for better readability
   const formattedTranscript = call.transcript
-    ? call.transcript.split('\n').map((line, index) => (
+    ? call.transcript.split("\n").map((line, index) => (
         <div key={index} className="whitespace-pre-wrap">
           {line}
         </div>
@@ -50,7 +50,7 @@ export default async function CallPage({
       <div>
         <h1 className="font-bold text-lg md:text-2xl">Call Information</h1>
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-3">
         <span>
           <span className="font-bold">Person: </span>
           {call.user_phone_number}

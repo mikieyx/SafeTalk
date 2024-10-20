@@ -2,6 +2,7 @@
 
 import { Call } from "@prisma/client";
 import { jsPDF } from "jspdf";
+import { Button } from "./ui/button";
 
 const GeneratePDF = ({ call }: { call: Call }) => {
   const handleGeneratePDF = () => {
@@ -77,7 +78,7 @@ const GeneratePDF = ({ call }: { call: Call }) => {
     doc.save("Emergency_Call_Evidence_Report.pdf");
   };
 
-  return <button onClick={handleGeneratePDF}>Generate PDF</button>;
+  return <Button onClick={handleGeneratePDF}>Generate PDF</Button>;
 };
 
 export default GeneratePDF;
