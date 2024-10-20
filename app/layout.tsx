@@ -9,6 +9,8 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/toaster";
+import OngoingCalls from "@/components/OngoingCalls";
+import { Suspense } from "react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -41,9 +43,14 @@ export default function RootLayout({
             <RedirectToSignIn />
           </SignedOut>
           <SignedIn>
-            <div className="flex justify-between items-center px-4 md:px-32 h-24 mb-8">
+            <div className="flex justify-between items-center px-4 md:px-32 h-24 border-b">
               <h1 className="font-bold text-3xl">AngelShot</h1>
               <UserButton />
+            </div>
+            <div className="mb-8">
+              <Suspense>
+                <OngoingCalls />
+              </Suspense>
             </div>
           </SignedIn>
           {children}
