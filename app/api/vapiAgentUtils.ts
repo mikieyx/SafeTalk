@@ -134,6 +134,7 @@ export const emergencyContactOptions = (
       firstMessage: `You are an emergency contact for ${user}. They requested your attention. Please check angle shot dot co for more information or call ${user} directly.`,
       maxDurationSeconds: 15,
     },
+    phoneNumberId: String(process.env.VAPI_PHONE_NUMBER_ID),
   };
 };
 
