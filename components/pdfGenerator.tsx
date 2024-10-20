@@ -63,15 +63,14 @@ const GeneratePDF = ({ call }: { call: Call }) => {
     doc.setFontSize(14);
     doc.text("Emergency Contacts:", 20, yOffset + 70);
     doc.setFontSize(12);
-    doc.text("Contacted: " + (call.contacts_notified ? "Yes" : "No"), 20, yOffset + 80);
-    doc.text("Contact Time: [Time Placeholder]", 20, yOffset + 90);
+    doc.text("Contacted at: " + (`${call.contacts_notified ? call.contacts_notified.toLocaleString() : "N/A"}`), 20, yOffset + 80);
 
     // Authorities
     doc.setFontSize(14);
     doc.text("Authorities Contacted:", 20, yOffset + 110);
     doc.setFontSize(12);
     doc.text(
-      "Contacted: " + (call.authorities_notified ? "Yes" : "No"),
+      "Contacted at: " + (`${call.authorities_notified ? call.authorities_notified.toLocaleString() : "N/A"}`),
       20,
       yOffset + 120
     );

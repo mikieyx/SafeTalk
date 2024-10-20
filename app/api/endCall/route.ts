@@ -1,15 +1,28 @@
 import { NextRequest } from "next/server";
 import { endCall } from "../(dbServerActions)/mongoActions";
+import prisma from "@/lib/prisma";
 
 export async function POST(req: NextRequest) {
   return req.json()
-    .then(({ message }) => {
+    .then(async ({ message }) => {
       console.log("Received POST request:", message);
 
       const callId = message.call?.id || "";
       const summary = message.analysis?.summary || "";
       const transcript = message.transcript || "";
       const recordingUrl = message.recording_url || "";
+
+      if (message.call?.endedReason === "assistant-forwarded-call") {
+        await prisma.call.updateMany({
+          where: {
+            user_phone_number: message.call.user_phone_number,
+            ongoing: true,
+          },
+          data: {
+            ongoing: false,
+            authorities_notified: new Date()
+        }})
+      }
 
       return endCall(callId, summary, transcript, recordingUrl);
     })

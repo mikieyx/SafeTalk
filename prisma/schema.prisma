@@ -61,6 +61,6 @@ model Call {
   transcript           String?
   recording_url        String?
 
-  authorities_notified Boolean @default(false)
-  contacts_notified    Boolean @default(false)
+  authorities_notified DateTime?
+  contacts_notified    DateTime?
 }

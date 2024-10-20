@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getEmergencyContacts } from "../../(dbServerActions)/mongoActions";
 import { emergencyContactOptions } from "../../vapiAgentUtils";
+import prisma from "@/lib/prisma";
 
 export async function POST(
   request: NextRequest,
@@ -59,6 +60,18 @@ export async function POST(
         emergencyContact.receiver_phone_number
       );
     }
+
+    // get all ongoing calls for user with phone number
+    await prisma.call.updateMany({
+      where : {
+        user_phone_number: params.user_phone_number,
+        end_time: null
+      },
+      data: {
+        contacts_notified: new Date()
+      }});
+
+    // for each ongoing call set contacted_emergency_contacts to true
 
     console.log("Response to be sent:", response);
     return NextResponse.json(response, { status: 200 });

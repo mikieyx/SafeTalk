@@ -67,11 +67,11 @@ export default async function CallPage({
         </span>
         <span>
           <span className="font-bold">Authorities Notified: </span>
-          {call.authorities_notified ? "Yes" : "No"}
+          {call.authorities_notified ? call.authorities_notified.toLocaleString() : "N/A"}
         </span>
         <span>
           <span className="font-bold">Contacts Notified: </span>
-          {call.contacts_notified ? "Yes" : "No"}
+          {call.contacts_notified ? call.contacts_notified.toLocaleString() : "N/A"}
         </span>
         <div className="flex space-x-2"></div>
         <span>

@@ -69,8 +69,8 @@ function CallRow({ call, onDelete }: { call: Call; onDelete: () => void }) {
           {call.start_time.toLocaleString()}
         </Link>
       </TableCell>
-      <TableCell>{call.contacts_notified ? "True" : "False"}</TableCell>
-      <TableCell>{call.authorities_notified ? "True" : "False"}</TableCell>
+      <TableCell>{call.contacts_notified ? call.contacts_notified.toLocaleString() : "False"}</TableCell>
+      <TableCell>{call.authorities_notified ? call.authorities_notified.toLocaleString() : "False"}</TableCell>
       <TableCell className="flex justify-end">
         <AlertDialog>
           <AlertDialogTrigger asChild>

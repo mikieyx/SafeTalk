@@ -64,7 +64,7 @@ export async function getContactCallOptions(
             },
             async: false,
             server: {
-              url: `https://www.angelshot.co/api/notifyContact/${assistant.user_phone_number}`,
+              url: `https://angelshot.co/api/notifyContact/${assistant.user_phone_number}`,
             },
           },
         ],
