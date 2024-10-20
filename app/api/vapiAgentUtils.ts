@@ -76,7 +76,7 @@ export type CallOptions = {
   customer?: Customer;
 };
 
-const fake911 = 
+const fake911 =
       {
         "type": "transferCall",
         "destinations": [
@@ -128,39 +128,7 @@ export const defaultOptions: CallOptions = {
       messages: [
         { content: "Test test test you are a test.", role: "assistant" },
       ],
-      tools: [fake911,
-        {
-          "type": "function",
-          "messages": [
-            {
-              "type": "request-start",
-              "content": "I'm going to notify your emergency contacts of the ongoing conversation. Please wait..."
-            },
-            {
-              "type": "request-complete",
-              "content": "I have notified your emergency contacts of the ongoing conversation."
-            },
-            {
-              "type": "request-failed",
-              "content": "I couldn't notify your emergency contacts of the ongoing conversation."
-            },
-          ],
-          "function": {
-            "name": "transcript_logger",
-            "parameters": {
-              "type": "object",
-              "properties": {
-              }
-            },
-            "description": "Logs the transcript of the current call."
-          },
-          "async": false,
-          "server": {
-            "url": "https://99cd-199-115-241-196.ngrok-free.app/api/notifyContact/1"
-          }
-        }
-
-      ],
+      tools: [],
       toolIds: [],
       provider: "openai",
       model: "gpt-4o",
