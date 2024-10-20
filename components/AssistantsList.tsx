@@ -36,7 +36,7 @@ export default function AssistantsList({
         <TableRow>
           <TableHead>Description</TableHead>
           <TableHead>Conversation Topic</TableHead>
-          <TableHead>Gender</TableHead>
+          <TableHead>Assistant Gender</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

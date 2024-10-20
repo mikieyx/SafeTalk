@@ -66,6 +66,10 @@ export async function getContactCallOptions(
           },
         ],
       },
+      voice: {
+        provider: "azure",
+        voiceId: assistant.gender === "male" ? "brian" : "emma"
+      }
     },
   };
 }
