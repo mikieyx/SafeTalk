@@ -2,18 +2,12 @@ import prisma from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
 import dayjs from "dayjs";
-// import { useState, useEffect, useCallback } from "react";
-import AudioStreamPlayer from "./callwebsocket";
 
 export default async function CallPage({
   params: { id },
 }: {
   params: { id: string };
 }) {
-  // const [socket, setSocket] = useState<WebSocket | null>(null)
-  // const [messages, setMessages] = useState<string[]>([])
-  // const [inputMessage, setInputMessage] = useState('')
-
   const user = await currentUser();
 
   const call = await prisma.call.findUnique({
@@ -41,50 +35,12 @@ export default async function CallPage({
     return notFound();
   }
 
-  // useEffect(() => {
-  //   // Create WebSocket connection
-  //   const ws = new WebSocket(call.listen_url)
-
-  //   ws.onopen = () => {
-  //     console.log('Connected to WebSocket')
-  //   }
-
-  //   ws.onmessage = (event) => {
-  //     setMessages((prevMessages) => [...prevMessages, event.data])
-  //   }
-
-  //   ws.onerror = (error) => {
-  //     console.error('WebSocket error:', error)
-  //   }
-
-  //   ws.onclose = () => {
-  //     console.log('Disconnected from WebSocket')
-  //   }
-
-  //   setSocket(ws)
-
-  //   // Clean up the WebSocket connection when the component unmounts
-  //   return () => {
-  //     ws.close()
-  //   }
-  // }, [])
-
-  // const sendMessage = useCallback(() => {
-  //   if (socket && socket.readyState === WebSocket.OPEN) {
-  //     socket.send(inputMessage)
-  //     setInputMessage('')
-  //   }
-  // }, [socket, inputMessage])
-
   return (
     <div className="mx-4 md:mx-32 my-8 p-4 md:p-8 space-y-4 border rounded-xl bg-background">
       <div>
         <h1 className="font-bold text-lg md:text-2xl">Call Information</h1>
       </div>
       <div className="flex flex-col">
-        <span>
-        <AudioStreamPlayer listenUrl={call.listen_url} />
-        </span>
         <span>
           <span className="font-bold">Person: </span>
           {call.user_phone_number}
