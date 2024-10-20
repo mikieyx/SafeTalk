@@ -128,7 +128,7 @@ export const defaultOptions: CallOptions = {
       messages: [
         { content: "Test test test you are a test.", role: "assistant" },
       ],
-      tools: [],
+      tools: [fake911],
       toolIds: [],
       provider: "openai",
       model: "gpt-4o",
