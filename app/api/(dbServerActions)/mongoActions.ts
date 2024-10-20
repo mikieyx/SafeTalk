@@ -1,10 +1,10 @@
+"use server";
 import prisma from "@/lib/prisma";
 import { CallOptions, systemPrompt } from "../vapiAgentUtils";
 
 export async function getContactCallOptions(
   contactId: string
 ): Promise<Partial<CallOptions> | null> {
-  "use server";
   const assistant = await prisma.assistant.findFirst({
     where: {
       id: contactId,
@@ -77,7 +77,7 @@ export async function getContactCallOptions(
             role: "system",
           },
         ],
-      },
+      },                                                                      
       voice: {
         provider: "11labs",
         voiceId: assistant.gender === "male" ? "ryan" : "marissa",
@@ -89,7 +89,6 @@ export async function getContactCallOptions(
 }
 
 export async function getEmergencyContacts(userPhoneNumber: string) {
-  "use server";
   const contacts = await prisma.emergencyContact.findMany({
     where: {
       sender_phone_number: userPhoneNumber,

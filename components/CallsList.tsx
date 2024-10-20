@@ -20,6 +20,7 @@ import {
 } from "./ui/alert-dialog";
 import { Call } from "@prisma/client";
 import { deleteCall } from "@/app/api/(dbServerActions)/mongoActions";
+import Link from "next/link";
 
 export default function CallsList({
   calls,
@@ -32,8 +33,9 @@ export default function CallsList({
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Name</TableHead>
-          <TableHead>Phone Number</TableHead>
+          <TableHead>Start Time</TableHead>
+          <TableHead>Emergency Contacts Notified</TableHead>
+          <TableHead>Authorities Notified</TableHead>
           <TableHead />
         </TableRow>
       </TableHeader>
@@ -59,9 +61,13 @@ export default function CallsList({
 function CallRow({ call, onDelete }: { call: Call; onDelete: () => void }) {
   return (
     <TableRow>
-      <TableCell>{call.start_time.toLocaleDateString()}</TableCell>
-      <TableCell>{call.contacts_notified}</TableCell>
-      <TableCell>{call.authorities_notified}</TableCell>
+      <TableCell>
+        <Link href={"/call/" + call.id}>
+          {call.start_time.toLocaleString()}
+        </Link>
+      </TableCell>
+      <TableCell>{call.contacts_notified ? "True" : "False"}</TableCell>
+      <TableCell>{call.authorities_notified ? "True" : "False"}</TableCell>
       <TableCell className="flex justify-end">
         <AlertDialog>
           <AlertDialogTrigger asChild>

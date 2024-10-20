@@ -1,7 +1,8 @@
+"use client";
+
 import { Call } from "@prisma/client";
 import React from "react";
 import CallsList from "./CallsList";
-import { set } from "react-hook-form";
 
 export default function Calls({ calls: _calls }: { calls: Call[] }) {
   const [calls, setCalls] = React.useState(_calls);
