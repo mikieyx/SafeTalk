@@ -9,7 +9,7 @@ type Assistant = {
   recordingEnabled?: boolean; // Should be true
   hipaaEnabled?: boolean; // Should be false
   clientMessage?: [];
-  serverMessage?: string[];
+  serverMessages?: string[];
   silenceTimeoutSeconds?: number;
   maxDurationSeconds?: number; // Interesting
   backgroundSound?: "office" | "off"; // Interesting
@@ -139,8 +139,8 @@ export const emergencyContactOptions = (
 
 export const defaultOptions: CallOptions = {
   name: "test call",
-  serverMessages: ["end-of-call-report", "transfer-destination-request"],
   assistant: {
+    serverMessages: ["end-of-call-report", "transfer-destination-request"],
     model: {
       messages: [
         { content: "Test test test you are a test.", role: "assistant" },
