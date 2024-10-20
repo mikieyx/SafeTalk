@@ -22,8 +22,6 @@ export async function POST(
     const toolCallId = toolCall.id || "default_tool_call_id";
     const transcript = toolCall.transcript || "No transcript provided";
 
-    console.log(toolCallId);
-
     const response = {
       results: [
         {
@@ -38,6 +36,18 @@ export async function POST(
     );
     for (const emergencyContact in emergencyContacts) {
       // text notify emergencyContact
+      const status = await fetch("https://api.vapi.ai/call", {
+        method: "POST",
+        headers: {
+          Authorization: String(process.env.VAPI_API_KEY),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(callParams),
+      });
+      if (!status.ok) {
+        console.error("Failed to notify emergency contact:", emergencyContact);
+        continue;
+      }
       console.log("Notifying emergency contact:", emergencyContact);
     }
 

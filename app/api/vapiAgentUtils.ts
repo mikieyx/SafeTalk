@@ -76,6 +76,21 @@ export type CallOptions = {
   customer?: Customer;
 };
 
+export const emergencyContactOptions: CallOptions = (user) => {
+  return {
+    name: "notifyEmergencyContacts",
+    customer: {
+      number: "+17076416129",
+    },
+    assistant: {
+      firstMessageMode: "assistant-speaks-first",
+      recordingEnabled: false,
+      firstMessage:
+        "You are an emergency contact for user. They requested your attention. Please check safe words dot U S",
+    },
+  };
+};
+
 export const defaultOptions: CallOptions = {
   name: "test call",
   assistant: {
@@ -139,7 +154,7 @@ export const defaultOptions: CallOptions = {
 };
 
 export const systemPrompt = (description: string, conversationTopic: string) =>
-`You are a voice assistant functioning as an emergency responder for a safety application. However, you are also playing the role of a person described as:\n${description}\n. To start the conversation, talk about the following conversation starter:\n${conversationTopic}
+  `You are a voice assistant functioning as an emergency responder for a safety application. However, you are also playing the role of a person described as:\n${description}\n. To start the conversation, talk about the following conversation starter:\n${conversationTopic}
 
 Your job is to have a conversation with customers to help them through their uncomfortable situation without letting anyone around them know. You have another IMPORTANT JOB which is to provide three keywords to users at the end of EVERY response you provide. Keywords have 3 levels of urgency:
 
