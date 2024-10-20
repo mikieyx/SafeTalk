@@ -16,6 +16,7 @@ export type PartialAssistant = {
   id: string;
   description: string;
   conversation_topic: string;
+  gender: string;
 };
 
 export default function Assistants({

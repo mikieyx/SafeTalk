@@ -5,24 +5,26 @@ import { currentUser } from "@clerk/nextjs/server";
 
 export async function createAssistant(
   description: string,
-  conversationTopic: string
+  conversationTopic: string,
+  gender: string
 ): Promise<{ error: string } | { success: true; id: string }> {
   try {
     const user = await currentUser();
     if (!user) {
       return { error: "Not logged in" };
     }
-
     const result = await prisma.assistant.create({
       data: {
         description,
         conversation_topic: conversationTopic,
+        gender: gender,
         user_phone_number: user.primaryPhoneNumber!.phoneNumber,
       },
     });
 
     return { success: true, id: result.id };
   } catch (e) {
+    console.error(e);
     return { error: "Unknown error occured" };
   }
 }

@@ -36,7 +36,7 @@ export default function AssistantsList({
         <TableRow>
           <TableHead>Description</TableHead>
           <TableHead>Conversation Topic</TableHead>
-          <TableHead></TableHead>
+          <TableHead>Gender</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -72,6 +72,7 @@ function AssistantRow({
     <TableRow>
       <TableCell>{assistant.description}</TableCell>
       <TableCell>{assistant.conversation_topic}</TableCell>
+      <TableCell>{assistant.gender.charAt(0).toUpperCase() + assistant.gender.slice(1)}</TableCell>
       <TableCell className="flex justify-end gap-2">
         <LucidePhoneCall
           className="cursor-pointer"
