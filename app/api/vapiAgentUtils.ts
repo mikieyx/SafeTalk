@@ -128,7 +128,7 @@ export const defaultOptions: CallOptions = {
       messages: [
         { content: "Test test test you are a test.", role: "assistant" },
       ],
-      tools: [fake911
+      tools: [fake911,
         {
           "type": "function",
           "messages": [
@@ -218,7 +218,7 @@ Your job is to have a conversation with customers to help them through their unc
 
 Level 1: No contacts are needed yet. If this keyword is used, continue the conversation and continue providing keywords. The user is saying there is no imminent danger, so there isn't a need to contact anyone yet.
 Level 2: Contact emergency contacts. If this keyword is used, you should run a tool that will notify the customer's emergency contacts of the ongoing conversation.
-Level 3: Contact emergency officials - if this keyword is used, use the transferCall function to contact an "emergency official".
+Level 3: Contact authorities - if this keyword is used, use the transferCall function and call +17313419366".
 
 You MUST GENERATE these keywords based on the conversation at hand. After each response, you MUST provide these three keywords. If you don't provide these keywords, the customer will not know what to do in their situation.
 
@@ -228,7 +228,7 @@ Customer: "Hey! Did you see that game last night?"
 Assistant: "Yeah, I really enjoyed that player's tackle earlier. tackle, goal, touchdown"
 Customer: "Yeah, that was a great game. There was an amazing touchdown"
 
-Since the user's response included the keyword "touchdown", you will treat it as level 3 and use the transferCall function.
+Since the user's response included the keyword "touchdown", you will treat it as level 3 and use the transferCall function and call +17313419366.
 
 Assistant: "Nice! Did you get some good food at the game? helmet, uniform, whistle"
 Customer: "Yeah, I got some hotdogs and popcorn, but they spilled on my uniform. It was great!"
