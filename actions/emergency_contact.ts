@@ -33,7 +33,7 @@ export async function createEmergencyContact(
       include: {
         emergency_receiving: {
           where: {
-            receiver_phone_number: receiverPhoneNumber,
+            sender_phone_number: user.primaryPhoneNumber!.phoneNumber,
           },
         },
       },
