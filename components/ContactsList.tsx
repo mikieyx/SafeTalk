@@ -35,7 +35,7 @@ export default function ContactsList({
         <TableRow>
           <TableHead>Name</TableHead>
           <TableHead>Phone Number</TableHead>
-          <TableHead></TableHead>
+          <TableHead />
         </TableRow>
       </TableHeader>
       <TableBody>
