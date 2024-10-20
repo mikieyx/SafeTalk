@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import localFont from "next/font/local";
 import "./globals.css";
 import {
@@ -11,6 +12,7 @@ import {
 import { Toaster } from "@/components/ui/toaster";
 import OngoingCalls from "@/components/OngoingCalls";
 import { Suspense } from "react";
+import Link from "next/link";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -44,7 +46,15 @@ export default function RootLayout({
           </SignedOut>
           <SignedIn>
             <div className="flex justify-between items-center px-4 md:px-32 h-20 shadow-md">
-              <h1 className="font-bold text-3xl">AngelShot</h1>
+              <Link href="/">
+                <Image
+                  className="w-64 h-auto transition-transform duration-300 transform hover:scale-110"
+                  src="/AngelShotText.png"
+                  alt="AngelShot"
+                  width={200}
+                  height={100}
+                />
+              </Link>
               <UserButton />
             </div>
             <div className="mb-8">
