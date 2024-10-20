@@ -1,7 +1,6 @@
 import prisma from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
-import dayjs from "dayjs";
 import GeneratePDF from "@/components/pdfGenerator";
 
 export default async function CallPage({
