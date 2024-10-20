@@ -21,6 +21,10 @@ export async function getContactCallOptions(
     name: contactId,
     customer: { number: assistant.user_phone_number },
     assistant: {
+      transcriber: {
+        model: "nova-2-phonecall",
+        provider: "deepgram"
+      },
       model: {
         tools: [
           {
