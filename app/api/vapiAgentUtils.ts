@@ -176,7 +176,7 @@ export const defaultOptions: CallOptions = {
     endCallPhrases: ["You're safe now.", "Goodbye!", "Have a good day!", "Bye!"],
     serverUrl: "https://angelshot.co/api/endCall",
     startSpeakingPlan: {
-      waitSeconds: 0.4,
+      waitSeconds: 1,
       smartEndpointingEnabled: false,
       transcriptionEndpointingPlan: {
         onPunctuationSeconds: 0.1,
