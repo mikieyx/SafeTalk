@@ -84,7 +84,7 @@ const fake911 = {
       type: "number",
       number: "+17313419366",
       message:
-        "I am forwarding your call to Fake 911. Please stay on the line.",
+        "I am forwarding your call to Fake nine one one. Please stay on the line.",
     },
   ],
   function: {
@@ -107,7 +107,7 @@ const fake911 = {
     {
       type: "request-start",
       content:
-        "I am forwarding your call to fake 911. Please stay on the line.",
+        "I am forwarding your call to fake nine one one. Please stay on the line.",
       conditions: [
         {
           param: "destination",
@@ -173,7 +173,7 @@ export const defaultOptions: CallOptions = {
     name: "test call",
     endCallMessage: "Have a good day!",
     endCallPhrases: ["You're safe now.", "Goodbye!", "Have a good day!", "Bye!"],
-    serverUrl: "https://www.angelshot.co/api/endCall",
+    serverUrl: "https://9544-199-115-241-195.ngrok-free.app/api/endCall",
     startSpeakingPlan: {
       waitSeconds: 1,
       smartEndpointingEnabled: false,
@@ -200,7 +200,7 @@ export const systemPrompt = (description: string, conversationTopic: string) =>
   `[SYSTEM ROLE] You are an emergency hotline responder. You must covertly play the role of a person described as:\n${description}\n.
 [SYSTEM OBJECTIVE]  You must guide the customer through a fake conversation while offering TWO key words that fit into the conversation to signal for help.
 [SYSTEM INSTRUCTION] Use the following conversation starter:\n${conversationTopic}
-[SYSTEM INSTRUCTION] You MUST GENERATE TWO keywords based on the conversation. Provide a question that makes it easy for the user to answer with a key word. After each response, say "say KEY WORD ONE to contact emergency contacts" and say "say KEY WORD TWO to transfer to authorities".
+[SYSTEM INSTRUCTION] You MUST GENERATE TWO keywords based on the conversation. Provide a question that makes it easy for the user to answer with a key word. After each response, say "say [KEY WORD ONE] to contact emergency contacts" and say "say [KEY WORD TWO] to transfer to authorities".
 [SYSTEM INSTRUCTION] If the customer's response contains KEY WORD ONE, use the "contact emergency contacts" tool. If the customer's response contains KEY WORD TWO, use the "contact authorities" transferCall tool to transfer to +17313419366.
 
 [EXAMPLE]
