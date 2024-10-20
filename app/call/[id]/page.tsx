@@ -35,6 +35,15 @@ export default async function CallPage({
     return notFound();
   }
 
+  // Reformatting the transcript for better readability
+  const formattedTranscript = call.transcript
+    ? call.transcript.split('\n').map((line, index) => (
+        <div key={index} className="whitespace-pre-wrap">
+          {line}
+        </div>
+      ))
+    : "No transcript available.";
+
   return (
     <div className="mx-4 md:mx-32 my-8 p-4 md:p-8 space-y-4 border rounded-xl bg-background">
       <div>
@@ -63,7 +72,25 @@ export default async function CallPage({
           <span className="font-bold">Contacts Notified: </span>
           {call.contacts_notified ? "Yes" : "No"}
         </span>
-          <div className="flex space-x-2"></div>
+        <div className="flex space-x-2"></div>
+        <span>
+          <span className="font-bold">Summary:</span>
+          <div className="mt-2 border-2 p-3">{call.summary}</div>
+        </span>
+        <span>
+          <span className="font-bold">Transcript:</span>
+          <div className="mt-2 border-2 p-3">{formattedTranscript}</div>
+        </span>
+        <span>
+          <span className="font-bold">Recording:</span>
+          <div className="mt-2 border-2 p-3">
+            {call.recording_url ? (
+              <audio controls src={call.recording_url} />
+            ) : (
+              "No recording available."
+            )}
+          </div>
+        </span>
       </div>
     </div>
   );

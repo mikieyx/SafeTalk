@@ -144,7 +144,7 @@ export const defaultOptions: CallOptions = {
     serverMessages: ["end-of-call-report", "transfer-destination-request"],
     model: {
       messages: [
-        { content: "Test test test you are a test.", role: "assistant" },
+        { content: "", role: "system" },
       ],
       tools: [fake911],
       toolIds: [],
@@ -173,7 +173,7 @@ export const defaultOptions: CallOptions = {
     name: "test call",
     endCallMessage: "Have a good day!",
     endCallPhrases: ["You're safe now.", "Goodbye!", "Have a good day!", "Bye!"],
-    serverUrl: "https://angelshot.co/api/endCall",
+    serverUrl: "https://900f-199-115-241-195.ngrok-free.app/api/endCall",
     startSpeakingPlan: {
       waitSeconds: 1,
       smartEndpointingEnabled: false,
