@@ -36,7 +36,7 @@ export default async function CallPage({
   }
 
   return (
-    <div className="mx-4 md:mx-32 my-8 p-4  space-y-4 border rounded-xl bg-background">
+    <div className="mx-4 md:mx-32 my-8 p-4 md:p-8 space-y-4 border rounded-xl bg-background">
       <div>
         <h1 className="font-bold text-lg md:text-2xl">Call Information</h1>
       </div>
