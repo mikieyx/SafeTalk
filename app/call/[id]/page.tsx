@@ -1,13 +1,19 @@
+'use client'
 import prisma from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
 import dayjs from "dayjs";
+import { useState, useEffect, useCallback } from "react";
 
 export default async function CallPage({
   params: { id },
 }: {
   params: { id: string };
 }) {
+  const [socket, setSocket] = useState<WebSocket | null>(null)
+  const [messages, setMessages] = useState<string[]>([])
+  const [inputMessage, setInputMessage] = useState('')
+
   const user = await currentUser();
 
   const call = await prisma.call.findUnique({
@@ -34,6 +40,41 @@ export default async function CallPage({
   ) {
     return notFound();
   }
+
+  useEffect(() => {
+    // Create WebSocket connection
+    const ws = new WebSocket(call.listen_url)
+
+    ws.onopen = () => {
+      console.log('Connected to WebSocket')
+    }
+
+    ws.onmessage = (event) => {
+      setMessages((prevMessages) => [...prevMessages, event.data])
+    }
+
+    ws.onerror = (error) => {
+      console.error('WebSocket error:', error)
+    }
+
+    ws.onclose = () => {
+      console.log('Disconnected from WebSocket')
+    }
+
+    setSocket(ws)
+
+    // Clean up the WebSocket connection when the component unmounts
+    return () => {
+      ws.close()
+    }
+  }, [])
+
+  const sendMessage = useCallback(() => {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      socket.send(inputMessage)
+      setInputMessage('')
+    }
+  }, [socket, inputMessage])
 
   return (
     <div className="mx-4 md:mx-32 my-8 p-4 md:p-8 space-y-4 border rounded-xl bg-background">
@@ -63,6 +104,12 @@ export default async function CallPage({
           <span className="font-bold">Contacts Notified: </span>
           {call.contacts_notified ? "Yes" : "No"}
         </span>
+        <div className="h-60 overflow-y-auto border rounded p-2">
+            {messages.map((message, index) => (
+              <p key={index}>{message}</p>
+            ))}
+          </div>
+          <div className="flex space-x-2"></div>
       </div>
     </div>
   );

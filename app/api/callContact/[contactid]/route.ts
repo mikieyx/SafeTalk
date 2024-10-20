@@ -50,6 +50,7 @@ export async function POST(
         id: data.id as string,
         user_phone_number: data.customer.number as string,
         start_time: data.createdAt as string,
+        listen_url: data.monitor.listenUrl as string
       },
     });
 
