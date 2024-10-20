@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import localFont from "next/font/local";
 import "./globals.css";
 import {
@@ -44,7 +45,13 @@ export default function RootLayout({
           </SignedOut>
           <SignedIn>
             <div className="flex justify-between items-center px-4 md:px-32 h-20 shadow-md">
-              <h1 className="font-bold text-3xl">AngelShot</h1>
+              <Image
+                className="w-64 h-auto"
+                src="/AngelShotText.png"
+                alt="AngelShot"
+                width={200}
+                height={100}
+              />
               <UserButton />
             </div>
             <div className="mb-8">
