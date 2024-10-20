@@ -24,6 +24,8 @@ export default async function Home() {
     dbUser = await prisma.user.create({
       data: {
         phone_number: phoneNumber,
+        firstName: user.firstName!,
+        lastName: user.lastName!,
       },
       include: {
         emergency_sending: true,

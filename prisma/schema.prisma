@@ -16,6 +16,9 @@ datasource db {
 model User {
   phone_number String @id @map("_id")
 
+  firstName String
+  lastName  String
+
   emergency_sending   EmergencyContact[] @relation(name: "sending")
   emergency_receiving EmergencyContact[] @relation(name: "receiving")
 
