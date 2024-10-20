@@ -64,7 +64,7 @@ export async function getContactCallOptions(
             },
             async: false,
             server: {
-              url: `https://9544-199-115-241-195.ngrok-free.app/api/notifyContact/${assistant.user_phone_number}`,
+              url: `https://www.angelshot.co/api/notifyContact/${assistant.user_phone_number}`,
             },
           },
         ],

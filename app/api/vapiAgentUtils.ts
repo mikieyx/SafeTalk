@@ -173,7 +173,7 @@ export const defaultOptions: CallOptions = {
     name: "test call",
     endCallMessage: "Have a good day!",
     endCallPhrases: ["You're safe now.", "Goodbye!", "Have a good day!", "Bye!"],
-    serverUrl: "https://9544-199-115-241-195.ngrok-free.app/api/endCall",
+    serverUrl: "https://www.angelshot.co/api/endCall",
     startSpeakingPlan: {
       waitSeconds: 1,
       smartEndpointingEnabled: false,
