@@ -22,6 +22,7 @@ import { createAssistant } from "@/actions/assistant";
 const assistantSchema = z.object({
   description: z.string(),
   conversation_topic: z.string(),
+  gender: z.enum(["male", "female"]),
 });
 
 export function AddAssistantForm({
@@ -34,6 +35,7 @@ export function AddAssistantForm({
     defaultValues: {
       description: "",
       conversation_topic: "",
+      gender: "male",
     },
   });
 
@@ -42,9 +44,11 @@ export function AddAssistantForm({
   async function onSubmit(values: z.infer<typeof assistantSchema>) {
     const result = await createAssistant(
       values.description,
-      values.conversation_topic
+      values.conversation_topic,
+      values.gender
     );
     if ("error" in result) {
+      console.log(result.error);
       toast({
         title: "Could not create assistant",
         description: result.error,
@@ -80,6 +84,26 @@ export function AddAssistantForm({
               <FormLabel>Conversation Topic</FormLabel>
               <FormControl>
                 <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="gender"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Gender</FormLabel>
+              <FormControl>
+                <select
+                  value={field.value}
+                  onChange={field.onChange}
+                  className="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
               </FormControl>
               <FormMessage />
             </FormItem>
