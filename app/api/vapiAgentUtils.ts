@@ -131,7 +131,7 @@ export const emergencyContactOptions = (
     assistant: {
       firstMessageMode: "assistant-speaks-first",
       recordingEnabled: false,
-      firstMessage: `You are an emergency contact for ${user}. They requested your attention. Please check angle shot dot co for more information or call ${user} directly.`,
+      firstMessage: `You are an emergency contact for ${user}. They requested your attention. Please check angel shot dot co for more information or call ${user} directly.`,
       maxDurationSeconds: 15,
     },
     phoneNumberId: String(process.env.VAPI_PHONE_NUMBER_ID),
