@@ -12,7 +12,8 @@ export async function POST(req: NextRequest) {
       const transcript = message.transcript || "";
       const recordingUrl = message.recording_url || "";
 
-      if (message.call?.endedReason === "assistant-forwarded-call") {
+      if (message.endedReason === "assistant-forwarded-call") {
+        console.log("Updating call to be ongoing=false and authorities_notified=now");
         await prisma.call.updateMany({
           where: {
             user_phone_number: message.call.user_phone_number,
