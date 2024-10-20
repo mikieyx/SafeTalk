@@ -12,6 +12,14 @@ export async function getContactCallOptions(
   });
   console.log("PRISMA ASSISTANT", assistant);
 
+  // get user's name from phone number
+  const user = await prisma.user.findFirst({
+    where: {
+      phone_number: assistant?.user_phone_number,
+    }
+  });
+  console.log("PRISMA USER", user);
+
   if (assistant == null) {
     return null;
   }
@@ -73,7 +81,9 @@ export async function getContactCallOptions(
       voice: {
         provider: "11labs",
         voiceId: assistant.gender === "male" ? "phillip" : "marissa"
-      }
+      },
+      firstMessage: `Hey ${user?.firstName}! How was your day!`,
+      endCallMessage: `Have a good day ${user?.firstName}!`,
     },
   };
 }
