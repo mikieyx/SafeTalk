@@ -83,3 +83,15 @@ export async function getEmergencyContacts(userPhoneNumber: string) {
 
   return contacts;
 }
+
+export async function endCall(cid: string) {
+  await prisma.call.update({
+    where: {
+      id: cid,
+    },
+    data: {
+      ongoing: false,
+      end_time: new Date(),
+    },
+  });
+}
