@@ -1,4 +1,5 @@
 import Assistants from "@/components/Assistants";
+import Calls from "@/components/Calls";
 import Contacts from "@/components/Contacts";
 import prisma from "@/lib/prisma";
 import { currentUser } from "@clerk/nextjs/server";
@@ -33,11 +34,17 @@ export default async function Home() {
       },
     });
   }
+  const calls = await prisma.call.findMany({
+    where: {
+      user_phone_number: phoneNumber,
+    },
+  });
 
   return (
     <div className="space-y-8 my-8">
       <Contacts contacts={dbUser.emergency_sending} />
       <Assistants assistants={dbUser.assistants} />
+      <Calls calls={calls} />
     </div>
   );
 }

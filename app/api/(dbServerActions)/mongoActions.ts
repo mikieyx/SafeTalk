@@ -16,7 +16,7 @@ export async function getContactCallOptions(
   const user = await prisma.user.findFirst({
     where: {
       phone_number: assistant?.user_phone_number,
-    }
+    },
   });
   console.log("PRISMA USER", user);
 
@@ -31,7 +31,7 @@ export async function getContactCallOptions(
     assistant: {
       transcriber: {
         model: "nova-2-phonecall",
-        provider: "deepgram"
+        provider: "deepgram",
       },
       model: {
         tools: [
@@ -80,7 +80,7 @@ export async function getContactCallOptions(
       },
       voice: {
         provider: "11labs",
-        voiceId: assistant.gender === "male" ? "ryan" : "marissa"
+        voiceId: assistant.gender === "male" ? "ryan" : "marissa",
       },
       firstMessage: `Hey! How have you been ${user?.firstName}?`,
       endCallMessage: `Have a good day ${user?.firstName}!`,
@@ -102,7 +102,12 @@ export async function getEmergencyContacts(userPhoneNumber: string) {
   return contacts;
 }
 
-export async function endCall(cid: string, summary: string, transcript: string, recording_url: string) {
+export async function endCall(
+  cid: string,
+  summary: string,
+  transcript: string,
+  recording_url: string
+) {
   await prisma.call.update({
     where: {
       id: cid,
@@ -112,7 +117,15 @@ export async function endCall(cid: string, summary: string, transcript: string, 
       end_time: new Date(),
       summary: summary,
       transcript: transcript,
-      recording_url: recording_url
+      recording_url: recording_url,
+    },
+  });
+}
+
+export async function deleteCall(cid: string) {
+  await prisma.call.delete({
+    where: {
+      id: cid,
     },
   });
 }
