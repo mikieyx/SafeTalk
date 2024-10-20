@@ -67,8 +67,8 @@ export async function getContactCallOptions(
         ],
       },
       voice: {
-        provider: "azure",
-        voiceId: assistant.gender === "male" ? "brian" : "emma"
+        provider: "11labs",
+        voiceId: assistant.gender === "male" ? "phillip" : "marissa"
       }
     },
   };
