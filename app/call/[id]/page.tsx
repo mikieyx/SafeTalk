@@ -57,21 +57,23 @@ export default async function CallPage({
         </span>
         <span>
           <span className="font-bold">Start Time: </span>
-          {dayjs(call.start_time).format("MMMM D, YYYY h:mm A")}
+          {call.start_time.toLocaleString()}
         </span>
         <span>
           <span className="font-bold">End Time: </span>
-          {call.end_time
-            ? dayjs(call.end_time).format("MMMM D, YYYY h:mm A")
-            : "In Progress"}
+          {call.end_time ? call.end_time.toLocaleString() : "In Progress"}
         </span>
         <span>
           <span className="font-bold">Authorities Notified: </span>
-          {call.authorities_notified ? call.authorities_notified.toLocaleString() : "N/A"}
+          {call.authorities_notified
+            ? call.authorities_notified.toLocaleString()
+            : "N/A"}
         </span>
         <span>
           <span className="font-bold">Contacts Notified: </span>
-          {call.contacts_notified ? call.contacts_notified.toLocaleString() : "N/A"}
+          {call.contacts_notified
+            ? call.contacts_notified.toLocaleString()
+            : "N/A"}
         </span>
         <div className="flex space-x-2"></div>
         <span>
