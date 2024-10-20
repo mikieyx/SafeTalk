@@ -52,7 +52,7 @@ export async function getContactCallOptions(
             },
             async: false,
             server: {
-              url: `https://safewords.us/api/notifyContact/${assistant.user_phone_number}`,
+              url: `https://www.angelshot.co/api/notifyContact/${assistant.user_phone_number}`,
             },
           },
         ],
