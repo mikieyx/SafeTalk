@@ -68,6 +68,7 @@ export type CallOptions = {
   assistantId?: string;
   assistant?: Assistant;
   assistantOverrides?: Assistant;
+  serverMessages?: string[];
   squadId?: string;
   squad?: Squad;
   phoneNumberId?: string;
@@ -138,8 +139,8 @@ export const emergencyContactOptions = (
 
 export const defaultOptions: CallOptions = {
   name: "test call",
+  serverMessages: ["end-of-call-report", "transfer-destination-request"],
   assistant: {
-    serverMessage: ["end-of-call-report", "transfer-destination-request"],
     model: {
       messages: [
         { content: "Test test test you are a test.", role: "assistant" },
