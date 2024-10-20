@@ -20,6 +20,8 @@ model User {
   emergency_receiving EmergencyContact[] @relation(name: "receiving")
 
   assistants Assistant[]
+
+  calls Call[]
 }
 
 model EmergencyContact {
@@ -39,4 +41,17 @@ model Assistant {
 
   user              User   @relation(fields: [user_phone_number], references: [phone_number])
   user_phone_number String
+}
+
+model Call {
+  id String @id @map("_id")
+
+  user              User   @relation(fields: [user_phone_number], references: [phone_number])
+  user_phone_number String
+
+  start_time DateTime
+  end_time   DateTime?
+
+  authorities_notified Boolean @default(false)
+  contacts_notified    Boolean @default(false)
 }
