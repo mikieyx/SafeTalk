@@ -3,7 +3,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
 import dayjs from "dayjs";
 // import { useState, useEffect, useCallback } from "react";
-import CallWebSocket from "./callwebsocket";
+import AudioStreamPlayer from "./callwebsocket";
 
 export default async function CallPage({
   params: { id },
@@ -83,7 +83,7 @@ export default async function CallPage({
       </div>
       <div className="flex flex-col">
         <span>
-        <CallWebSocket listenUrl={call.listen_url} />
+        <AudioStreamPlayer listenUrl={call.listen_url} />
         </span>
         <span>
           <span className="font-bold">Person: </span>
