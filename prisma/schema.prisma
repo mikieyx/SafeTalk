@@ -51,6 +51,7 @@ model Call {
 
   start_time DateTime
   end_time   DateTime?
+  ongoing    Boolean   @default(true)
 
   authorities_notified Boolean @default(false)
   contacts_notified    Boolean @default(false)
