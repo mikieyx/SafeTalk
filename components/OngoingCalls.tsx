@@ -22,9 +22,9 @@ export default async function OngoingCalls() {
     return (
       <div
         key={ongoing.id}
-        className="flex justify-between items-center bg-red-500 p-4"
+        className="flex justify-between items-center bg-red-500 px-4 md:px-32 py-4"
       >
-        <span className="text-xl">
+        <span className="text-lg md:text-xl">
           Emergency call in progress by {ongoing.user_phone_number}
         </span>
         <Link href={"/call/" + ongoing.id}>
