@@ -35,9 +35,10 @@ export async function POST(
     const emergencyContacts = await getEmergencyContacts(
       params.user_phone_number
     );
+
     for (const emergencyContact of emergencyContacts) {
       const callParams = emergencyContactOptions(
-        emergencyContact.sender.phone_number,
+        emergencyContact.sender.firstName,
         emergencyContact.receiver_phone_number
       );
       // text notify emergencyContact
