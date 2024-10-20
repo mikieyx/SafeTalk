@@ -156,11 +156,12 @@ export const defaultOptions: CallOptions = {
       numFastTurns: 1,
     },
     firstMessageMode: "assistant-speaks-first",
+    backgroundSound: "off",
     recordingEnabled: true,
     hipaaEnabled: false,
     silenceTimeoutSeconds: 30,
     maxDurationSeconds: 600,
-    backchannelingEnabled: true,
+    backchannelingEnabled: false,
     transportConfigurations: [
       {
         provider: "twilio",
@@ -172,7 +173,7 @@ export const defaultOptions: CallOptions = {
     name: "test call",
     firstMessage: "Hey! How was your day!",
     endCallMessage: "Have a good day!",
-    endCallPhrases: ["Peace"],
+    endCallPhrases: ["You're safe now.", "Goodbye!", "Have a good day!", "Bye!"],
     serverUrl: "https://angelshot.co/api/endCall",
     startSpeakingPlan: {
       waitSeconds: 0.4,
