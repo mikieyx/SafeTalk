@@ -33,7 +33,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 my-8">
       <Contacts contacts={dbUser.emergency_sending} />
       <Assistants assistants={dbUser.assistants} />
     </div>

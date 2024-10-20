@@ -57,7 +57,7 @@ export default function RootLayout({
               </Link>
               <UserButton />
             </div>
-            <div className="mb-8">
+            <div>
               <Suspense>
                 <OngoingCalls />
               </Suspense>
